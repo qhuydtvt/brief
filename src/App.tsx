@@ -247,7 +247,7 @@ function App() {
         <main className="flex-1 container mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 flex items-center justify-center">
           
           {/* Mobile Viewport Container */}
-          <div className="relative w-[360px] max-w-full aspect-[9/16] rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden bg-black flex flex-col select-none border border-border/80">
+          <div className="relative h-[85vh] max-h-[880px] aspect-[9/16] max-w-[95vw] rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden bg-black flex flex-col select-none border border-border/80">
             
             {/* 9:16 Scroll-Snap Feed Viewport */}
             <div className="flex-1 overflow-y-scroll snap-y snap-mandatory no-scrollbar h-full w-full relative">
