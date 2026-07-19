@@ -13,12 +13,7 @@ import {
   Bookmark,
   Share2,
   Music,
-  Home,
-  Search,
-  MessageSquare,
-  User,
   PlusSquare,
-  Volume2,
   ExternalLink
 } from "lucide-react";
 import { Button } from "~/components/ui/button";
@@ -367,14 +362,8 @@ function App() {
 
         {/* Center: Mobile Frame Simulator */}
         <div className="flex-1 flex justify-center items-center">
-          <div className="relative w-full max-w-[340px] xs:max-w-[360px] md:max-w-[380px] h-[640px] md:h-[680px] rounded-[48px] border-[10px] border-neutral-900 dark:border-neutral-800 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden bg-black flex flex-col select-none ring-1 ring-white/10">
+          <div className="relative w-[360px] max-w-full aspect-[9/16] rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden bg-black flex flex-col select-none border border-border/80">
             
-            {/* Phone Notch/Dynamic Island */}
-            <div className="absolute top-3.5 left-1/2 -translate-x-1/2 h-5 w-24 bg-neutral-900 dark:bg-neutral-800 rounded-full z-30 flex items-center justify-center">
-              <div className="h-1.5 w-1.5 bg-neutral-800 dark:bg-neutral-700 rounded-full absolute right-4" />
-              <div className="h-1 w-8 bg-neutral-800 dark:bg-neutral-700 rounded-full absolute left-4" />
-            </div>
-
             {/* 9:16 Scroll-Snap Feed Viewport */}
             <div className="flex-1 overflow-y-scroll snap-y snap-mandatory no-scrollbar h-full w-full relative">
               {currentSlides.map((slide, index) => {
@@ -382,17 +371,8 @@ function App() {
                 return (
                   <div 
                     key={slide.id} 
-                    className={`h-full w-full shrink-0 snap-start bg-gradient-to-br ${slide.bgColor} relative flex flex-col justify-between p-5 pt-12 pb-14`}
+                    className={`h-full w-full shrink-0 snap-start bg-gradient-to-br ${slide.bgColor} relative flex flex-col justify-between p-6 pb-8`}
                   >
-                    {/* Status bar top-overlay inside phone */}
-                    <div className="absolute top-2 left-6 right-6 flex justify-between text-[10px] font-bold text-white/60 z-20 pointer-events-none">
-                      <span>9:41</span>
-                      <div className="flex gap-x-1 items-center">
-                        <Volume2 className="h-3 w-3" />
-                        <span>LTE</span>
-                      </div>
-                    </div>
-
                     {/* Top title info inside mobile view */}
                     <div className="flex justify-between items-center z-10">
                       <Badge className="bg-white/10 text-white border-none backdrop-blur-sm text-[10px] px-2 py-0.5">
@@ -489,29 +469,6 @@ function App() {
               )}
             </div>
 
-            {/* Mobile Bottom Navigation Bar overlay inside phone */}
-            <div className="absolute bottom-0 left-0 right-0 h-12 bg-black/90 backdrop-blur border-t border-white/10 flex items-center justify-around text-white/40 px-2 z-20">
-              <button className="text-white flex flex-col items-center cursor-pointer">
-                <Home className="h-4.5 w-4.5" />
-                <span className="text-[8px] font-bold mt-0.5">Home</span>
-              </button>
-              <button className="hover:text-white flex flex-col items-center cursor-pointer transition-colors">
-                <Search className="h-4.5 w-4.5" />
-                <span className="text-[8px] font-bold mt-0.5">Discover</span>
-              </button>
-              <button className="hover:text-white flex items-center justify-center h-7 w-11 rounded-md bg-white text-black font-extrabold text-sm cursor-pointer transition-transform hover:scale-105 active:scale-95">
-                +
-              </button>
-              <button className="hover:text-white flex flex-col items-center cursor-pointer transition-colors">
-                <MessageSquare className="h-4.5 w-4.5" />
-                <span className="text-[8px] font-bold mt-0.5">Inbox</span>
-              </button>
-              <button className="hover:text-white flex flex-col items-center cursor-pointer transition-colors">
-                <User className="h-4.5 w-4.5" />
-                <span className="text-[8px] font-bold mt-0.5">Profile</span>
-              </button>
-            </div>
-            
           </div>
         </div>
 
