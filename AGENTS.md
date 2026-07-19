@@ -149,4 +149,6 @@ When editing or extending this codebase, adhere to the following principles:
 3.  **Tailwind CSS Utility First**: Do not add custom arbitrary style rules outside Tailwind CSS directives. If configuring new theme variables or custom classes, specify them within [src/styles/globals.css](file:///Users/huynq/Learn/brief/src/styles/globals.css).
 4.  **Theme-Safety**: Ensure all text, backgrounds, and icons adapt gracefully to theme variations (check contrast ratios in both light and dark mode classes).
 5.  **Interactive Elements**: When adding clickable items inside the draggable widget, ensure they do not capture the drag handle listeners, which must remain restricted to the header handler.
-6.  **Code verification**: Prior to completing modifications, verify that the application compiles correctly using `pnpm build`.
+6.  **Frontend Design**: Use/activate the `frontend-design` skill (located at [SKILL.md](file:///Users/huynq/Learn/brief/.agents/skills/frontend-design/SKILL.md)) whenever the task involves front-end design UI changes, layout, typography, or styling adjustments.
+7.  **Feature-Sliced Design**: Use/activate the `feature-sliced-design` skill (located at [SKILL.md](file:///Users/huynq/Learn/brief/.agents/skills/feature-sliced-design/SKILL.md)) whenever the task involves front-end code changes, file structuring, or architectural organization according to Feature-Sliced Design principles.
+8.  **Code verification**: Prior to completing modifications, verify that the application compiles correctly using `pnpm build`.
