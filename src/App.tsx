@@ -10,7 +10,9 @@ import {
   Plus,
   Trash2,
   CheckCircle2,
-  ExternalLink
+  ExternalLink,
+  Lock,
+  Zap
 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
@@ -30,7 +32,19 @@ function App() {
     return "dark";
   });
 
-  // Local state for interactive features planner
+  // Mode state: static vs dynamic
+  const [mode, setMode] = useState<"static" | "dynamic">("static");
+
+  // Local state for static template checklists (toggleable, but not addable/deletable)
+  const [staticPlans, setStaticPlans] = useState<PlanItem[]>([
+    { id: "s1", text: "Customize styling in src/styles/globals.css", completed: true },
+    { id: "s2", text: "Create layout shell with modern backdrop blur", completed: true },
+    { id: "s3", text: "Establish dark mode state sync via local storage", completed: true },
+    { id: "s4", text: "Assemble high-fidelity dashboard widget interface", completed: false },
+    { id: "s5", text: "Deploy build target to hosting / staging server", completed: false },
+  ]);
+
+  // Local state for interactive features planner (dynamic)
   const [plans, setPlans] = useState<PlanItem[]>(() => {
     const saved = localStorage.getItem("brief_plans");
     if (saved) {
@@ -41,9 +55,9 @@ function App() {
       }
     }
     return [
-      { id: "1", text: "Customize styling in src/styles/globals.css", completed: false },
-      { id: "2", text: "Create new components under src/components", completed: false },
-      { id: "3", text: "Configure client routing or state management", completed: false },
+      { id: "1", text: "Integrate mock API fetching mechanism", completed: false },
+      { id: "2", text: "Implement unit tests for components using Vitest", completed: false },
+      { id: "3", text: "Optimize bundle sizes and lazy-load routes", completed: false },
     ];
   });
   const [newPlanText, setNewPlanText] = useState("");
@@ -81,24 +95,62 @@ function App() {
   };
 
   const togglePlan = (id: string) => {
-    setPlans((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, completed: !item.completed } : item
-      )
-    );
+    if (id.startsWith("s")) {
+      setStaticPlans((prev) =>
+        prev.map((item) =>
+          item.id === id ? { ...item, completed: !item.completed } : item
+        )
+      );
+    } else {
+      setPlans((prev) =>
+        prev.map((item) =>
+          item.id === id ? { ...item, completed: !item.completed } : item
+        )
+      );
+    }
   };
 
   const deletePlan = (id: string) => {
+    if (id.startsWith("s")) return; // Cannot delete static plans
     setPlans((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const activePlans = mode === "static" ? staticPlans : plans;
+
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-300 flex flex-col font-sans">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300 flex flex-col font-sans relative">
       {/* Background gradients */}
-      <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-500/10 via-background to-background dark:from-indigo-950/20" />
+      <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-500/10 via-background to-background dark:from-indigo-950/20 pointer-events-none" />
       
+      {/* Floating Right Widget */}
+      <div className="fixed right-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-y-3 z-50 bg-card/90 backdrop-blur-md p-3.5 rounded-2xl border border-border/80 shadow-2xl transition-all duration-300 hover:scale-105">
+        <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest text-center select-none pb-1">
+          Widget
+        </div>
+        <div className="flex flex-col gap-y-2">
+          <Button
+            variant={mode === "static" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setMode("static")}
+            className="w-20 justify-center gap-x-1 shadow-sm text-xs h-8 cursor-pointer font-medium"
+          >
+            <Lock className="h-3.5 w-3.5" />
+            Static
+          </Button>
+          <Button
+            variant={mode === "dynamic" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setMode("dynamic")}
+            className="w-20 justify-center gap-x-1 shadow-sm text-xs h-8 cursor-pointer font-medium"
+          >
+            <Zap className="h-3.5 w-3.5" />
+            Dynamic
+          </Button>
+        </div>
+      </div>
+
       {/* Navigation */}
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+      <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
         <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-x-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-md">
@@ -190,30 +242,45 @@ function App() {
         <section className="max-w-2xl mx-auto w-full border border-border/50 bg-card/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-sm">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-xl font-bold">Project Setup Checklist</h2>
-              <p className="text-xs text-muted-foreground mt-1">Keep track of your setup tasks as you build.</p>
+              <h2 className="text-xl font-bold flex items-center gap-x-2">
+                Project Setup Checklist
+                <Badge variant={mode === "static" ? "outline" : "default"} className="text-[10px] px-2 py-0">
+                  {mode === "static" ? "Static Mode" : "Dynamic Mode"}
+                </Badge>
+              </h2>
+              <p className="text-xs text-muted-foreground mt-1">
+                {mode === "static"
+                  ? "Currently viewing standard template setups (toggles enabled, add/delete locked)."
+                  : "Keep track of your custom setup tasks as you build."}
+              </p>
             </div>
             <Badge variant="outline" className="text-xs">
-              {plans.filter(p => p.completed).length} / {plans.length} Done
+              {activePlans.filter(p => p.completed).length} / {activePlans.length} Done
             </Badge>
           </div>
 
-          <form onSubmit={addPlan} className="flex gap-x-2 mb-6">
-            <input
-              type="text"
-              value={newPlanText}
-              onChange={(e) => setNewPlanText(e.target.value)}
-              placeholder="Add a setup task (e.g., install React Router)..."
-              className="flex-1 h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            />
-            <Button type="submit" size="sm" className="h-9 gap-x-1">
-              <Plus className="h-4 w-4" />
-              Add
-            </Button>
-          </form>
+          {mode === "dynamic" ? (
+            <form onSubmit={addPlan} className="flex gap-x-2 mb-6">
+              <input
+                type="text"
+                value={newPlanText}
+                onChange={(e) => setNewPlanText(e.target.value)}
+                placeholder="Add a setup task (e.g., install React Router)..."
+                className="flex-1 h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              />
+              <Button type="submit" size="sm" className="h-9 gap-x-1">
+                <Plus className="h-4 w-4" />
+                Add
+              </Button>
+            </form>
+          ) : (
+            <div className="bg-muted/40 text-muted-foreground text-xs p-3 rounded-lg border border-border/40 mb-6 text-center">
+              Task writing is locked in <strong>Static Mode</strong>. Switch to <strong>Dynamic</strong> using the floating widget to add/delete.
+            </div>
+          )}
 
           <div className="space-y-3">
-            {plans.map((item) => (
+            {activePlans.map((item) => (
               <div
                 key={item.id}
                 className="flex items-center justify-between p-3 rounded-lg border border-border/30 bg-background/40 hover:bg-background/80 transition-all duration-200 group/item"
@@ -237,18 +304,20 @@ function App() {
                     {item.text}
                   </span>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => deletePlan(item.id)}
-                  className="h-8 w-8 text-muted-foreground hover:text-destructive transition-all duration-200 opacity-0 group-hover/item:opacity-100"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+                {mode === "dynamic" && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => deletePlan(item.id)}
+                    className="h-8 w-8 text-muted-foreground hover:text-destructive transition-all duration-200 opacity-0 group-hover/item:opacity-100"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
             ))}
 
-            {plans.length === 0 && (
+            {activePlans.length === 0 && (
               <div className="text-center py-8 text-sm text-muted-foreground">
                 All checklist items completed! Add new tasks to keep planning.
               </div>
@@ -281,4 +350,3 @@ function App() {
 }
 
 export default App;
-
