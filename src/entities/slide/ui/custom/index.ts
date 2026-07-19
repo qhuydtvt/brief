@@ -4,7 +4,7 @@ export * from "./SlideTestToRemember";
 export * from "./SlideSpaceYourPractice";
 export * from "./SlideMakeItPersonal";
 export * from "./SlideDesignForPortrait";
-export * from "./SlideKeepWithinReach";
+export * from "./SlideFrontloadKeywords";
 export * from "./SlideReadTheSound";
 export * from "./SlideHookThemFast";
 export * from "./SlideSwipeAndRepeat";

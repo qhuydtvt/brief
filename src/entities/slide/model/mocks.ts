@@ -66,7 +66,7 @@ export const staticSlides: SlideItem[] = [
     bgColor: "from-fuchsia-950 via-violet-950 to-black",
     title: "Learner Engagement",
     description: "Interactive learning guide for vertical mobile UI design.",
-    tag: "#thumbzone",
+    tag: "#fpattern",
     likes: 1340,
     comments: 105,
     shares: 67
