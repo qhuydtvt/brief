@@ -151,4 +151,5 @@ When editing or extending this codebase, adhere to the following principles:
 5.  **Interactive Elements**: When adding clickable items inside the draggable widget, ensure they do not capture the drag handle listeners, which must remain restricted to the header handler.
 6.  **Frontend Design**: Use/activate the `frontend-design` skill (located at [SKILL.md](file:///Users/huynq/Learn/brief/.agents/skills/frontend-design/SKILL.md)) whenever the task involves front-end design UI changes, layout, typography, or styling adjustments.
 7.  **Feature-Sliced Design**: Use/activate the `feature-sliced-design` skill (located at [SKILL.md](file:///Users/huynq/Learn/brief/.agents/skills/feature-sliced-design/SKILL.md)) whenever the task involves front-end code changes, file structuring, or architectural organization according to Feature-Sliced Design principles.
-8.  **Code verification**: Prior to completing modifications, verify that the application compiles correctly using `pnpm build`.
+8.  **Mobile-First Design**: Focus on mobile-first design and development (responsive layouts beginning with small screens, optimized touch targets/pointer interactions, and adaptive scroll-snapping alignment).
+9.  **Code verification**: Prior to completing modifications, verify that the application compiles correctly using `pnpm build`.
