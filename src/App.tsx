@@ -125,7 +125,7 @@ function App() {
       {/* Floating Right Widget */}
       <div className="fixed right-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-y-3 z-50 bg-card/90 backdrop-blur-md p-3.5 rounded-2xl border border-border/80 shadow-2xl transition-all duration-300 hover:scale-105">
         <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest text-center select-none pb-1">
-          Widget
+          Modes
         </div>
         <div className="flex flex-col gap-y-2">
           <Button
