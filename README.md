@@ -57,6 +57,7 @@ Follow these steps to get started with the react-vite-ui template:
 ## 📜 Available Scripts
 
 - pnpm dev - Starts the development server.
+- pnpm dev:tunnel - Starts both the Vite development server and ngrok tunnel concurrently.
 - pnpm build - Builds the production-ready code.
 - pnpm lint - Runs ESLint to analyze and lint the code.
 - pnpm preview - Starts the Vite development server in preview mode.
