@@ -3,33 +3,103 @@ import type { SlideItem } from "./types";
 export const staticSlides: SlideItem[] = [
   {
     id: "s1",
-    bgColor: "from-purple-900 via-indigo-950 to-black",
-    title: "Welcome to Brief",
-    description: "A premium mobile emulator viewport styled in 9:16 aspect ratio. Swipe or scroll down to explore.",
-    tag: "#react19 #vite7",
-    likes: 1240,
+    bgColor: "from-slate-900 via-indigo-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#cognitiveload",
+    likes: 1205,
     comments: 89,
     shares: 45
   },
   {
     id: "s2",
-    bgColor: "from-indigo-950 via-slate-900 to-black",
-    title: "Tailwind CSS v4",
-    description: "Powered by the brand new lightning-fast CSS engine. Full custom-variant dark modes support.",
-    tag: "#tailwind #styling",
-    likes: 980,
-    comments: 64,
-    shares: 30
+    bgColor: "from-violet-950 via-purple-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#dualcoding",
+    likes: 854,
+    comments: 42,
+    shares: 19
   },
   {
     id: "s3",
-    bgColor: "from-emerald-950 via-zinc-900 to-black",
-    title: "shadcn/ui Layout",
-    description: "Includes Radix primitives, tailwind-merge, and clean configurations in components.json.",
-    tag: "#shadcn #radix",
+    bgColor: "from-indigo-950 via-blue-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#activerecall",
     likes: 1450,
     comments: 112,
-    shares: 78
+    shares: 88
+  },
+  {
+    id: "s4",
+    bgColor: "from-emerald-950 via-teal-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#spacedrepetition",
+    likes: 932,
+    comments: 65,
+    shares: 34
+  },
+  {
+    id: "s5",
+    bgColor: "from-teal-950 via-indigo-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#learningpsychology",
+    likes: 760,
+    comments: 38,
+    shares: 21
+  },
+  {
+    id: "s6",
+    bgColor: "from-rose-950 via-fuchsia-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#portraitlayout",
+    likes: 1102,
+    comments: 94,
+    shares: 56
+  },
+  {
+    id: "s7",
+    bgColor: "from-fuchsia-950 via-violet-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#thumbzone",
+    likes: 1340,
+    comments: 105,
+    shares: 67
+  },
+  {
+    id: "s8",
+    bgColor: "from-cyan-950 via-blue-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#kinetictypography",
+    likes: 1510,
+    comments: 140,
+    shares: 92
+  },
+  {
+    id: "s9",
+    bgColor: "from-sky-950 via-indigo-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#patterninterrupt",
+    likes: 980,
+    comments: 72,
+    shares: 41
+  },
+  {
+    id: "s10",
+    bgColor: "from-purple-950 via-pink-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#microinteractions",
+    likes: 1220,
+    comments: 85,
+    shares: 55
   }
 ];
 

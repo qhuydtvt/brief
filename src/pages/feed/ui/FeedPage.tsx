@@ -55,7 +55,7 @@ export function FeedPage() {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div className="h-full w-full bg-background text-foreground transition-colors duration-300 font-sans relative overflow-hidden">
+      <div className="h-dvh w-full bg-background text-foreground transition-colors duration-300 font-sans relative overflow-hidden">
 
         {/* Background gradients */}
         <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-500/10 via-background to-background dark:from-indigo-950/20 pointer-events-none" />
