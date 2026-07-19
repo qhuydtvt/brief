@@ -11,8 +11,7 @@ import {
   Bookmark,
   Share2,
   Music,
-  PlusSquare,
-  ExternalLink
+  PlusSquare
 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
@@ -324,25 +323,7 @@ function App() {
 
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border/40 py-4 bg-background/50 z-10">
-        <div className="container mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-y-4 text-[10px] text-muted-foreground sm:px-6 lg:px-8">
-          <div>
-            Built with React, Vite & Tailwind CSS. Viewport ratio 9:16.
-          </div>
-          <div className="flex gap-x-4">
-            <a
-              href="https://ui.shadcn.com/docs"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline flex items-center gap-x-0.5"
-            >
-              shadcn/ui Docs
-              <ExternalLink className="h-3 w-3" />
-            </a>
-          </div>
-        </div>
-      </footer>
+
     </div>
   );
 }
