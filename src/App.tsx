@@ -216,27 +216,27 @@ function App() {
 
         {/* Navigation */}
         <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
-          <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-x-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-md">
-                <Sparkles className="h-5 w-5 animate-pulse" />
+          <div className="container mx-auto flex h-11 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-x-1.5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm">
+                <Sparkles className="h-4 w-4 animate-pulse" />
               </div>
-              <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground/90 to-muted-foreground bg-clip-text text-transparent">
+              <span className="text-sm font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground/90 to-muted-foreground bg-clip-text text-transparent">
                 Brief
               </span>
             </div>
 
-            <div className="flex items-center gap-x-4">
+            <div className="flex items-center gap-x-3">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={toggleTheme}
-                className="rounded-lg h-9 w-9 text-muted-foreground hover:text-foreground"
+                className="rounded-md h-7 w-7 text-muted-foreground hover:text-foreground"
               >
                 {theme === "dark" ? (
-                  <Sun className="h-5 w-5" />
+                  <Sun className="h-4 w-4" />
                 ) : (
-                  <Moon className="h-5 w-5" />
+                  <Moon className="h-4 w-4" />
                 )}
               </Button>
             </div>
