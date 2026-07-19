@@ -32,7 +32,7 @@ export function MobileSimulatorFeed({ slides, mode, likedSlides, onLike }: Mobil
             }
             commentButtonSlot={
               <button className="flex flex-col items-center gap-y-0.5 group cursor-pointer focus:outline-none">
-                <div className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-md flex items-center justify-center border border-white/10 group-hover:scale-110 active:scale-95 transition-all">
+                <div className="h-10 w-10 rounded-full bg-transparent flex items-center justify-center group-hover:scale-110 active:scale-95 transition-all">
                   <MessageCircle className="h-5 w-5 text-white" />
                 </div>
                 <span className="text-[10px] font-bold shadow-sm">{slide.comments}</span>
@@ -40,7 +40,7 @@ export function MobileSimulatorFeed({ slides, mode, likedSlides, onLike }: Mobil
             }
             saveButtonSlot={
               <button className="flex flex-col items-center gap-y-0.5 group cursor-pointer focus:outline-none">
-                <div className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-md flex items-center justify-center border border-white/10 group-hover:scale-110 active:scale-95 transition-all">
+                <div className="h-10 w-10 rounded-full bg-transparent flex items-center justify-center group-hover:scale-110 active:scale-95 transition-all">
                   <Bookmark className="h-5 w-5 text-white" />
                 </div>
                 <span className="text-[10px] font-bold shadow-sm">Save</span>
@@ -48,7 +48,7 @@ export function MobileSimulatorFeed({ slides, mode, likedSlides, onLike }: Mobil
             }
             shareButtonSlot={
               <button className="flex flex-col items-center gap-y-0.5 group cursor-pointer focus:outline-none">
-                <div className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-md flex items-center justify-center border border-white/10 group-hover:scale-110 active:scale-95 transition-all">
+                <div className="h-10 w-10 rounded-full bg-transparent flex items-center justify-center group-hover:scale-110 active:scale-95 transition-all">
                   <Share2 className="h-5 w-5 text-white" />
                 </div>
                 <span className="text-[10px] font-bold shadow-sm">{slide.shares}</span>

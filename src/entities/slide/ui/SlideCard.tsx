@@ -105,7 +105,7 @@ export function SlideCard({
         </div>
 
         {/* Floating Actions Bar (Pink/Red Block, Right) */}
-        <div className="absolute bottom-6 right-1 z-40 flex flex-col items-center gap-y-4 text-white bg-transparent p-2 shrink-0">
+        <div className="absolute bottom-6 right-0 z-40 flex flex-col items-center gap-y-4 text-white bg-transparent p-2 shrink-0">
           {likeButtonSlot}
           {commentButtonSlot}
           {saveButtonSlot}
