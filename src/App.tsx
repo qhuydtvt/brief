@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { 
   Sparkles, 
-  Github, 
   Sun, 
   Moon,
   Lock,
@@ -185,14 +184,6 @@ function App() {
           </div>
 
           <div className="flex items-center gap-x-4">
-            <a
-              href="https://github.com/dan5py/react-vite-shadcn-ui"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-            >
-              <Github className="h-5 w-5" />
-            </a>
             <Button
               variant="ghost"
               size="icon"
