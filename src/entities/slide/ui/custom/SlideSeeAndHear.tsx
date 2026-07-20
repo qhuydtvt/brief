@@ -4,10 +4,10 @@ import { Apple, Bell, Bird, Volume2 } from "lucide-react";
 
 type ItemType = "apple" | "bell" | "bird";
 
-const ITEMS: Record<ItemType, { name: string; Icon: any; color: string; soundUrl: string }> = {
-  apple: { name: "Apple", Icon: Apple, color: "text-red-400", soundUrl: "/sounds/apple.mp3" },
-  bell: { name: "Bell", Icon: Bell, color: "text-yellow-400", soundUrl: "/sounds/bell.mp3" },
-  bird: { name: "Bird", Icon: Bird, color: "text-blue-400", soundUrl: "/sounds/bird.mp3" },
+const ITEMS: Record<ItemType, { name: string; Icon: any; color: string; soundUrl: string; spellingUrl: string }> = {
+  apple: { name: "Apple", Icon: Apple, color: "text-red-400", soundUrl: "/sounds/apple.mp3", spellingUrl: "/sounds/apple_spelling.mp3" },
+  bell: { name: "Bell", Icon: Bell, color: "text-yellow-400", soundUrl: "/sounds/bell.mp3", spellingUrl: "/sounds/bell_spelling.mp3" },
+  bird: { name: "Bird", Icon: Bird, color: "text-blue-400", soundUrl: "/sounds/bird.mp3", spellingUrl: "/sounds/bird_spelling.mp3" },
 };
 
 export function SlideSeeAndHear({ slide: _slide }: { slide: SlideItem }) {
@@ -19,13 +19,24 @@ export function SlideSeeAndHear({ slide: _slide }: { slide: SlideItem }) {
 
   const bothOn = visualOn && auditoryOn;
 
-  const speakItemName = (itemName: string) => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(itemName);
-      utterance.onend = () => setIsPlaying(false);
-      utterance.onerror = () => setIsPlaying(false);
-      window.speechSynthesis.speak(utterance);
+  const playSpokenName = (spellingUrl: string, itemName: string) => {
+    if (audioRef.current) {
+      audioRef.current.onended = () => setIsPlaying(false);
+      audioRef.current.onerror = () => {
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          const utterance = new SpeechSynthesisUtterance(itemName);
+          utterance.onend = () => setIsPlaying(false);
+          utterance.onerror = () => setIsPlaying(false);
+          window.speechSynthesis.speak(utterance);
+        } else {
+          setIsPlaying(false);
+        }
+      };
+      audioRef.current.src = spellingUrl;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {
+        setIsPlaying(false);
+      });
     } else {
       setIsPlaying(false);
     }
@@ -37,22 +48,22 @@ export function SlideSeeAndHear({ slide: _slide }: { slide: SlideItem }) {
     setIsPlaying(true);
     const item = ITEMS[selectedItem];
 
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-    }
-
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
       audioRef.current.src = item.soundUrl;
-      audioRef.current.onended = () => speakItemName(item.name);
-      audioRef.current.onerror = () => speakItemName(item.name);
+      audioRef.current.onended = () => {
+        playSpokenName(item.spellingUrl, item.name);
+      };
+      audioRef.current.onerror = () => {
+        playSpokenName(item.spellingUrl, item.name);
+      };
       audioRef.current.play().catch((err) => {
         console.error("Audio play error", err);
-        speakItemName(item.name);
+        playSpokenName(item.spellingUrl, item.name);
       });
     } else {
-      speakItemName(item.name);
+      setIsPlaying(false);
     }
   };
 
