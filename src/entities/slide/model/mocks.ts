@@ -52,16 +52,6 @@ export const staticSlides: SlideItem[] = [
     shares: 88
   },
   {
-    id: "s4",
-    bgColor: "from-emerald-950 via-teal-950 to-black",
-    title: "Learner Engagement",
-    description: "Interactive learning guide for vertical mobile UI design.",
-    tag: "#spacedrepetition",
-    likes: 932,
-    comments: 65,
-    shares: 34
-  },
-  {
     id: "s6",
     bgColor: "from-rose-950 via-fuchsia-950 to-black",
     title: "Learner Engagement",
@@ -90,6 +80,16 @@ export const staticSlides: SlideItem[] = [
     likes: 980,
     comments: 72,
     shares: 41
+  },
+  {
+    id: "s4",
+    bgColor: "from-emerald-950 via-teal-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#spacedrepetition",
+    likes: 932,
+    comments: 65,
+    shares: 34
   },
   {
     id: "s10",

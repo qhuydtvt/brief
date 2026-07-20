@@ -56,7 +56,7 @@ Based on the [Mobile UX & Attention Retention Research Report](file:///Users/huy
 *   **User Touch Interaction**: After exactly 2 seconds of viewing, or upon the user's first scroll attempt, a sudden visual disruption occurs—the background color inverted, the text scales up 150%, and the angle tilts slightly.
 *   **Code Implementation Outline**: React `useEffect` `setTimeout` for 2000ms. State `isHooked`. When true, apply Tailwind classes like `scale-150 -rotate-3 invert` combined with `transition-transform duration-200`.
 
-## Slide 10: Swipe and Repeat
+## Slide 10: Frictionless Micro-Flows
 *   **Slide Topic & Rationale**: Frictionless interaction loops and variable rewards.
 *   **Custom Layout & Visuals**: A sandbox environment featuring a dummy feed post.
 *   **User Touch Interaction**: 

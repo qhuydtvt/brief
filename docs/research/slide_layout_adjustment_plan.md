@@ -72,6 +72,6 @@ A common layout pattern will be applied:
    * **Layout**: Title and main point at the top. The 3-second timer and sudden visual pattern interrupt element below.
 
 10. **SlideSwipeAndRepeat.tsx**
-    * **Title**: "Swipe and Repeat"
+    * **Title**: "Frictionless Micro-Flows"
     * **Main Point**: "Keep learners hooked using double-taps, bottom drawers, and seamless loop design."
     * **Layout**: Title and main point at the top. The micro-interaction examples (double tap to like, bottom drawer pull) below.
