@@ -5,6 +5,7 @@ import { MobileSimulatorFeed } from "~/widgets/mobile-simulator-feed";
 import { DraggableModesWidget } from "~/widgets/draggable-modes-widget";
 import { ThemeToggleButton } from "~/features/toggle-theme";
 import { ModeSwitcher } from "~/features/switch-feed-mode";
+import { PortraitLockOverlay } from "~/features/lock-portrait";
 import { staticSlides, defaultDynamicSlides } from "~/entities/slide";
 import type { SlideItem } from "~/entities/slide";
 
@@ -55,6 +56,7 @@ export function FeedPage() {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
+      <PortraitLockOverlay />
       <div className="h-dvh w-full bg-background text-foreground transition-colors duration-300 font-sans relative overflow-hidden">
 
         {/* Background gradients */}
