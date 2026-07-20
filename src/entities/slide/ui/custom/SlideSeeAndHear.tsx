@@ -113,9 +113,9 @@ export function SlideSeeAndHear({ slide: _slide }: { slide: SlideItem }) {
         ))}
       </div>
 
-      <div className="w-full max-w-[280px] flex-1 min-h-[180px] flex flex-col items-center justify-center relative">
+      <div className="w-full max-w-[280px] h-[215px] shrink-0 relative flex flex-col items-center justify-center">
         <div 
-          className={`w-full h-full rounded-2xl border transition-all duration-500 flex flex-col items-center justify-center relative overflow-hidden p-6 ${
+          className={`w-full h-full rounded-2xl border transition-all duration-500 flex flex-col items-center justify-center relative overflow-hidden pt-7 pb-5 px-4 ${
             bothOn 
               ? "bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border-indigo-400/40 shadow-[0_0_30px_rgba(99,102,241,0.2)]" 
               : visualOn
@@ -125,79 +125,62 @@ export function SlideSeeAndHear({ slide: _slide }: { slide: SlideItem }) {
               : "bg-white/5 border-white/10 backdrop-blur-md"
           }`}
         >
-          {/* Channel Badge */}
+          {/* Channel Badge (Top Tag for all modes) */}
           {bothOn && (
             <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-indigo-500/80 text-white text-[10px] font-bold px-3 py-1 rounded-full animate-bounce whitespace-nowrap shadow-lg">
               🧠 Dual Coding Active
             </div>
           )}
-          {!bothOn && !visualOn && !auditoryOn && (
-            <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-white/10 text-white/70 text-[10px] font-semibold px-2.5 py-0.5 rounded-full whitespace-nowrap border border-white/10">
-              📝 Text Channel
-            </div>
-          )}
           {!bothOn && visualOn && !auditoryOn && (
             <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-indigo-500/20 text-indigo-300 text-[10px] font-semibold px-2.5 py-0.5 rounded-full whitespace-nowrap border border-indigo-500/30">
-              👁️ Image Channel
+              👁️ Visual + Text
             </div>
           )}
           {!bothOn && !visualOn && auditoryOn && (
             <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-purple-500/20 text-purple-300 text-[10px] font-semibold px-2.5 py-0.5 rounded-full whitespace-nowrap border border-purple-500/30">
-              🔊 Sound Channel
+              🔊 Auditory + Text
+            </div>
+          )}
+          {!bothOn && !visualOn && !auditoryOn && (
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-white/10 text-white/70 text-[10px] font-semibold px-2.5 py-0.5 rounded-full whitespace-nowrap border border-white/10">
+              📝 Text Only
             </div>
           )}
 
-          {/* Main Display Content */}
-          <div className="flex flex-col items-center justify-center gap-3 mt-4">
-            {/* 1. Plain Text Channel (No modes active) */}
-            {!visualOn && !auditoryOn && (
-              <div className="flex flex-col items-center gap-1">
-                <span className="text-4xl font-extrabold text-white tracking-wide drop-shadow-md">
-                  {activeItem.name}
-                </span>
-                <span className="text-[11px] text-white/40 font-medium">Plain Text Word</span>
-              </div>
-            )}
+          {/* Main Display Content - Symmetrical Centered Slots */}
+          <div className="flex flex-col items-center justify-center w-full h-full gap-1 pt-4">
+            {/* Visual Icon Slot (Equal top balance) */}
+            <div className="h-14 w-full flex items-center justify-center transition-all duration-300">
+              <ActiveIcon 
+                className={`w-14 h-14 ${activeItem.color} drop-shadow-[0_0_15px_currentColor] transition-all duration-300 ${
+                  visualOn ? "opacity-100 scale-100" : "opacity-0 scale-75 pointer-events-none"
+                }`} 
+                strokeWidth={1.5} 
+              />
+            </div>
 
-            {/* 2. Visual / Image Channel (Visual mode active, Auditory off) */}
-            {visualOn && !auditoryOn && (
-              <div className="flex flex-col items-center gap-2">
-                <ActiveIcon className={`w-20 h-20 ${activeItem.color} drop-shadow-[0_0_15px_currentColor] transition-all duration-300`} strokeWidth={1.5} />
-                <span className="text-[11px] text-indigo-200/60 font-medium">Visual Representation</span>
-              </div>
-            )}
+            {/* Text Word Slot (DEAD CENTER) */}
+            <div className="h-9 w-full flex items-center justify-center transition-all duration-300">
+              <span className="text-2xl font-bold text-white tracking-wide drop-shadow-md text-center">
+                {activeItem.name}
+              </span>
+            </div>
 
-            {/* 3. Sound Channel (Auditory mode active, Visual off) */}
-            {!visualOn && auditoryOn && (
-              <div className="flex flex-col items-center gap-3">
-                <div className="relative flex items-center justify-center w-14 h-14 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300">
-                  <Volume2 className={`w-7 h-7 ${isPlaying ? "animate-pulse text-purple-200" : "text-purple-300/70"}`} />
-                </div>
-                <div className="flex items-end gap-1 h-6">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <div
-                      key={i}
-                      className={`w-1.5 bg-purple-300/80 rounded-full transition-all duration-300 ${isPlaying ? "opacity-100" : "opacity-40"}`}
-                      style={{
-                        height: isPlaying ? `${heights[i]}%` : '4px',
-                      }}
-                    />
-                  ))}
-                </div>
-                <span className="text-[11px] text-purple-200/60 font-medium">Auditory Sound</span>
-              </div>
-            )}
-
-            {/* 4. Dual Coding (Both Visual and Auditory active) */}
-            {bothOn && (
-              <div className="flex flex-col items-center gap-2">
-                <ActiveIcon className={`w-16 h-16 ${activeItem.color} drop-shadow-[0_0_15px_currentColor] transition-all duration-300`} strokeWidth={1.5} />
-                <span className="text-2xl font-bold text-white tracking-tight">{activeItem.name}</span>
+            {/* Auditory Sound Waveform Slot (Equal bottom balance) */}
+            <div className="h-14 w-full flex items-center justify-center transition-all duration-300">
+              <div 
+                className={`flex items-center gap-1.5 transition-all duration-300 ${
+                  auditoryOn ? "opacity-100 scale-100" : "opacity-0 scale-75 pointer-events-none"
+                }`}
+              >
+                <Volume2 className={`w-4 h-4 ${isPlaying ? "animate-pulse text-purple-200" : "text-purple-300/70"}`} />
                 <div className="flex items-end gap-1 h-5">
                   {[0, 1, 2, 3, 4].map((i) => (
                     <div
                       key={i}
-                      className={`w-1.5 bg-white/80 rounded-full transition-all duration-300 ${isPlaying ? "opacity-100" : "opacity-50"}`}
+                      className={`w-1.5 bg-purple-300/90 rounded-full transition-all duration-300 ${
+                        isPlaying ? "opacity-100" : "opacity-40"
+                      }`}
                       style={{
                         height: isPlaying ? `${heights[i]}%` : '4px',
                       }}
@@ -205,7 +188,7 @@ export function SlideSeeAndHear({ slide: _slide }: { slide: SlideItem }) {
                   ))}
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
