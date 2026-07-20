@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { Header } from "~/widgets/header";
 import { MobileSimulatorFeed } from "~/widgets/mobile-simulator-feed";
@@ -10,8 +10,13 @@ import { staticSlides, defaultDynamicSlides } from "~/entities/slide";
 import type { SlideItem } from "~/entities/slide";
 
 export function FeedPage() {
-  // Mode state: static vs dynamic
-  const [mode, setMode] = useState<"static" | "dynamic">("static");
+  // Mode state: view vs edit
+  const [mode, setMode] = useState<"view" | "edit">("view");
+
+  // Header visibility state (hidden by default, shown during scroll)
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isHeaderHoveredRef = useRef(false);
 
   // Draggable widget coordinate offset state
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
@@ -31,6 +36,41 @@ export function FeedPage() {
     }
     return defaultDynamicSlides;
   });
+
+  const handleScroll = () => {
+    setHeaderVisible(true);
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+    scrollTimeoutRef.current = setTimeout(() => {
+      if (!isHeaderHoveredRef.current) {
+        setHeaderVisible(false);
+      }
+    }, 1500);
+  };
+
+  const handleHeaderMouseEnter = () => {
+    isHeaderHoveredRef.current = true;
+    setHeaderVisible(true);
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+  };
+
+  const handleHeaderMouseLeave = () => {
+    isHeaderHoveredRef.current = false;
+    scrollTimeoutRef.current = setTimeout(() => {
+      setHeaderVisible(false);
+    }, 1500);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleLike = (id: string) => {
     setLikedSlides((prev) => {
@@ -52,7 +92,7 @@ export function FeedPage() {
     }));
   };
 
-  const currentSlides = mode === "static" ? staticSlides : dynamicSlides;
+  const currentSlides = mode === "view" ? staticSlides : dynamicSlides;
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
@@ -71,7 +111,12 @@ export function FeedPage() {
         />
 
         {/* Navigation */}
-        <Header actionSlot={<ThemeToggleButton />} />
+        <Header 
+          visible={headerVisible}
+          actionSlot={<ThemeToggleButton />}
+          onMouseEnter={handleHeaderMouseEnter}
+          onMouseLeave={handleHeaderMouseLeave}
+        />
 
         {/* Main Content Area */}
         <main className="w-full h-full relative">
@@ -80,6 +125,7 @@ export function FeedPage() {
             mode={mode}
             likedSlides={likedSlides}
             onLike={handleLike}
+            onScroll={handleScroll}
           />
         </main>
       </div>

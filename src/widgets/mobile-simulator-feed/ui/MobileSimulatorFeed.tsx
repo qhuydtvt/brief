@@ -5,14 +5,18 @@ import { LikeButton } from "~/features/like-slide";
 
 interface MobileSimulatorFeedProps {
   slides: SlideItem[];
-  mode: "static" | "dynamic";
+  mode: "view" | "edit";
   likedSlides: Set<string>;
   onLike: (id: string) => void;
+  onScroll?: () => void;
 }
 
-export function MobileSimulatorFeed({ slides, mode, likedSlides, onLike }: MobileSimulatorFeedProps) {
+export function MobileSimulatorFeed({ slides, mode, likedSlides, onLike, onScroll }: MobileSimulatorFeedProps) {
   return (
-    <div className="w-full h-full overflow-y-scroll snap-y snap-mandatory no-scrollbar bg-black select-none relative">
+    <div 
+      onScroll={onScroll}
+      className="w-full h-full overflow-y-scroll snap-y snap-mandatory no-scrollbar bg-black select-none relative"
+    >
       {slides.map((slide, index) => {
         const isLiked = likedSlides.has(slide.id);
 

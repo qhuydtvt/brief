@@ -20,7 +20,7 @@ interface SlideCardProps {
   slide: SlideItem;
   index: number;
   totalSlides: number;
-  mode: "static" | "dynamic";
+  mode: "view" | "edit";
   likeButtonSlot: ReactNode;
   commentButtonSlot: ReactNode;
   saveButtonSlot: ReactNode;

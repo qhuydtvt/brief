@@ -3,11 +3,27 @@ import { Sparkles } from "lucide-react";
 
 interface HeaderProps {
   actionSlot?: ReactNode;
+  visible?: boolean;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
-export function Header({ actionSlot }: HeaderProps) {
+export function Header({
+  actionSlot,
+  visible = false,
+  onMouseEnter,
+  onMouseLeave,
+}: HeaderProps) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 w-full bg-transparent">
+    <header
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={`fixed top-0 left-0 right-0 z-40 w-full bg-background/80 backdrop-blur-md border-b border-border/10 transition-all duration-500 ease-out ${
+        visible
+          ? "translate-y-0 opacity-100 pointer-events-auto shadow-sm"
+          : "-translate-y-full opacity-0 pointer-events-none"
+      }`}
+    >
       <div className="flex h-11 w-full items-center justify-between px-6">
         <div className="flex items-center gap-x-1.5">
           <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm">
@@ -27,3 +43,4 @@ export function Header({ actionSlot }: HeaderProps) {
     </header>
   );
 }
+
