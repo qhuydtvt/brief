@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Music } from "lucide-react";
 import { Badge } from "~/shared/ui/badge";
 import type { SlideItem } from "../model/types";
 
@@ -94,10 +93,6 @@ export function SlideCard({
           <span className="text-[10px] font-bold text-indigo-300 block">
             {slide.tag}
           </span>
-          <div className="flex items-center gap-x-1.5 text-[9px] text-white/60 bg-white/5 backdrop-blur-sm px-2 py-1 rounded-full w-fit">
-            <Music className="h-3 w-3 animate-spin [animation-duration:8s]" />
-            <span className="truncate max-w-[120px] font-medium">Original Sound - Brief</span>
-          </div>
         </div>
 
         {/* Floating Actions Bar (Pink/Red Block, Right) */}
