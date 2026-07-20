@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { DndContext, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
 import { Header } from "~/widgets/header";
 import { MobileSimulatorFeed } from "~/widgets/mobile-simulator-feed";
 import { DraggableModesWidget } from "~/widgets/draggable-modes-widget";
@@ -12,6 +12,15 @@ import type { SlideItem } from "~/entities/slide";
 export function FeedPage() {
   // Mode state: view vs edit
   const [mode, setMode] = useState<"view" | "edit">("view");
+
+  // Dnd Sensors configuration for instant response and smooth tap detection
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    })
+  );
 
   // Header visibility state (hidden by default, shown during scroll)
   const [headerVisible, setHeaderVisible] = useState(false);
@@ -95,7 +104,7 @@ export function FeedPage() {
   const currentSlides = mode === "view" ? staticSlides : dynamicSlides;
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
       <PortraitLockOverlay />
       <div className="h-dvh w-full bg-background text-foreground transition-colors duration-300 font-sans relative overflow-hidden">
 
