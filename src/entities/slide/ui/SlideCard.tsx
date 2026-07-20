@@ -78,7 +78,7 @@ export function SlideCard({
         </div>
 
         {/* Bottom Metadata Overlay (Green Block, Left) */}
-        <div className="absolute bottom-1 left-3 max-w-[65%] z-20 bg-black/30 backdrop-blur-md p-2.5 rounded-2xl border border-white/10 text-white text-left space-y-2">
+        <div className="absolute bottom-1 left-3 max-w-[65%] z-20 bg-transparent p-2.5 text-white text-left space-y-2">
           <div className="flex items-center gap-x-2">
             <div className="h-6 w-6 rounded-full bg-indigo-500 border border-white/30 flex items-center justify-center text-[10px] font-black text-white shadow">
               B
