@@ -12,6 +12,16 @@ export const staticSlides: SlideItem[] = [
     shares: 45
   },
   {
+    id: "s7",
+    bgColor: "from-fuchsia-950 via-violet-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#fpattern",
+    likes: 1340,
+    comments: 105,
+    shares: 67
+  },
+  {
     id: "s2",
     bgColor: "from-violet-950 via-purple-950 to-black",
     title: "Learner Engagement",
@@ -20,6 +30,16 @@ export const staticSlides: SlideItem[] = [
     likes: 854,
     comments: 42,
     shares: 19
+  },
+  {
+    id: "s5",
+    bgColor: "from-teal-950 via-indigo-950 to-black",
+    title: "Learner Engagement",
+    description: "Interactive learning guide for vertical mobile UI design.",
+    tag: "#learningpsychology",
+    likes: 760,
+    comments: 38,
+    shares: 21
   },
   {
     id: "s3",
@@ -42,16 +62,6 @@ export const staticSlides: SlideItem[] = [
     shares: 34
   },
   {
-    id: "s5",
-    bgColor: "from-teal-950 via-indigo-950 to-black",
-    title: "Learner Engagement",
-    description: "Interactive learning guide for vertical mobile UI design.",
-    tag: "#learningpsychology",
-    likes: 760,
-    comments: 38,
-    shares: 21
-  },
-  {
     id: "s6",
     bgColor: "from-rose-950 via-fuchsia-950 to-black",
     title: "Learner Engagement",
@@ -60,16 +70,6 @@ export const staticSlides: SlideItem[] = [
     likes: 1102,
     comments: 94,
     shares: 56
-  },
-  {
-    id: "s7",
-    bgColor: "from-fuchsia-950 via-violet-950 to-black",
-    title: "Learner Engagement",
-    description: "Interactive learning guide for vertical mobile UI design.",
-    tag: "#fpattern",
-    likes: 1340,
-    comments: 105,
-    shares: 67
   },
   {
     id: "s8",
