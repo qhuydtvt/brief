@@ -33,10 +33,10 @@ export function SlideDesignForPortrait({ slide: _slide }: { slide: SlideItem }) 
       title: "Zero-Effort Focal Sweep",
       badgeText: "NATURAL FOCUS",
       icon: Sparkles,
-      iconColor: "text-zinc-200",
-      accentBorder: "border-white/20",
-      activeBg: "bg-zinc-900/60",
-      textColor: "text-zinc-300",
+      iconColor: "text-emerald-400",
+      accentBorder: "border-emerald-500/40",
+      activeBg: "bg-emerald-950/20",
+      textColor: "text-emerald-100",
       description:
         "Primary focal zone where user eye gaze naturally rests first (capturing ~80%+ attention) with zero physical strain.",
     },
@@ -45,10 +45,10 @@ export function SlideDesignForPortrait({ slide: _slide }: { slide: SlideItem }) 
       title: "Ergonomic Thumb Reach",
       badgeText: "OPTIMAL REACH",
       icon: Hand,
-      iconColor: "text-emerald-400",
-      accentBorder: "border-emerald-500/40",
-      activeBg: "bg-emerald-950/20",
-      textColor: "text-zinc-200",
+      iconColor: "text-indigo-400",
+      accentBorder: "border-indigo-500/40",
+      activeBg: "bg-indigo-950/20",
+      textColor: "text-indigo-100",
       description:
         "Optimal thumb sweep zone for 1-handed phone operation. Perfect for interactive CTAs, navigation, and primary controls.",
     },
@@ -193,13 +193,13 @@ export function SlideDesignForPortrait({ slide: _slide }: { slide: SlideItem }) 
                       01 / TOP ZONE (HARD REACH)
                     </span>
                   </div>
-                  <div className={`h-1/3 border-b border-dashed border-white/10 transition-colors duration-300 flex items-start pt-1 px-2 ${selectedPosition === "center" ? "bg-white/5" : ""}`}>
-                    <span className={`text-[9px] font-mono tracking-wider ${selectedPosition === "center" ? "text-zinc-200 font-semibold" : "text-zinc-600"}`}>
+                  <div className={`h-1/3 border-b border-dashed border-white/10 transition-colors duration-300 flex items-start pt-1 px-2 ${selectedPosition === "center" ? "bg-emerald-500/5" : ""}`}>
+                    <span className={`text-[9px] font-mono tracking-wider ${selectedPosition === "center" ? "text-emerald-400 font-semibold" : "text-zinc-600"}`}>
                       02 / CENTER ZONE (EYE SWEEP)
                     </span>
                   </div>
-                  <div className={`h-1/3 transition-colors duration-300 flex items-start pt-1 px-2 ${selectedPosition === "bottom" ? "bg-emerald-500/5" : ""}`}>
-                    <span className={`text-[9px] font-mono tracking-wider ${selectedPosition === "bottom" ? "text-emerald-400 font-semibold" : "text-zinc-600"}`}>
+                  <div className={`h-1/3 transition-colors duration-300 flex items-start pt-1 px-2 ${selectedPosition === "bottom" ? "bg-indigo-500/5" : ""}`}>
+                    <span className={`text-[9px] font-mono tracking-wider ${selectedPosition === "bottom" ? "text-indigo-400 font-semibold" : "text-zinc-600"}`}>
                       03 / BOTTOM ZONE (THUMB REACH)
                     </span>
                   </div>
