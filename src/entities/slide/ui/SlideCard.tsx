@@ -21,8 +21,6 @@ interface SlideCardProps {
   index: number;
   totalSlides: number;
   mode: "view" | "edit";
-  likeButtonSlot: ReactNode;
-  commentButtonSlot: ReactNode;
   saveButtonSlot: ReactNode;
   shareButtonSlot: ReactNode;
 }
@@ -32,8 +30,6 @@ export function SlideCard({
   index,
   totalSlides,
   mode: _mode,
-  likeButtonSlot,
-  commentButtonSlot,
   saveButtonSlot,
   shareButtonSlot
 }: SlideCardProps) {
@@ -106,8 +102,6 @@ export function SlideCard({
 
         {/* Floating Actions Bar (Pink/Red Block, Right) */}
         <div className="absolute bottom-6 right-0 z-40 flex flex-col items-center gap-y-4 text-white bg-transparent p-2 shrink-0">
-          {likeButtonSlot}
-          {commentButtonSlot}
           {saveButtonSlot}
           {shareButtonSlot}
         </div>
