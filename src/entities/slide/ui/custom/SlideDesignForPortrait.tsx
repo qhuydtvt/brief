@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import type { SlideItem } from "~/entities/slide/model/types";
-import { X, Layout, Hand, Smartphone, Sparkles, AlertTriangle, GripVertical } from "lucide-react";
+import { X, Layout, Hand, Smartphone, Sparkles, AlertTriangle, GripVertical, ArrowUpRight } from "lucide-react";
 
 type Position = "top" | "center" | "bottom";
 
@@ -17,29 +17,38 @@ export function SlideDesignForPortrait({ slide: _slide }: { slide: SlideItem }) 
 
   const ergonomicsNotes = {
     top: {
-      title: "Top Zone (0-30%): Eye Jump Fatigue",
+      zoneLabel: "TOP ZONE (0–30%)",
+      title: "Eye Jump Fatigue",
+      badgeText: "FATIGUE",
       icon: AlertTriangle,
       iconColor: "text-amber-400",
-      bgColor: "bg-amber-500/20 border-amber-400/40",
-      textColor: "text-amber-100",
+      accentBorder: "border-amber-500/30",
+      activeBg: "bg-amber-950/20",
+      textColor: "text-zinc-300",
       description:
         "Requires upper vertical eye movement and re-focusing. Hard to reach with one hand during single-handed phone usage.",
     },
     center: {
-      title: "Center Zone (30-70%): Zero-Effort Natural Focal Sweep",
+      zoneLabel: "CENTER ZONE (30–70%)",
+      title: "Zero-Effort Focal Sweep",
+      badgeText: "NATURAL FOCUS",
       icon: Sparkles,
-      iconColor: "text-emerald-400",
-      bgColor: "bg-emerald-500/20 border-emerald-400/40",
-      textColor: "text-emerald-100",
+      iconColor: "text-zinc-200",
+      accentBorder: "border-white/20",
+      activeBg: "bg-zinc-900/60",
+      textColor: "text-zinc-300",
       description:
         "Primary focal zone where user eye gaze naturally rests first (capturing ~80%+ attention) with zero physical strain.",
     },
     bottom: {
-      title: "Bottom Zone (70-100%): Ergonomic Thumb Reach",
+      zoneLabel: "BOTTOM ZONE (70–100%)",
+      title: "Ergonomic Thumb Reach",
+      badgeText: "OPTIMAL REACH",
       icon: Hand,
-      iconColor: "text-indigo-400",
-      bgColor: "bg-indigo-500/20 border-indigo-400/40",
-      textColor: "text-indigo-100",
+      iconColor: "text-emerald-400",
+      accentBorder: "border-emerald-500/40",
+      activeBg: "bg-emerald-950/20",
+      textColor: "text-zinc-200",
       description:
         "Optimal thumb sweep zone for 1-handed phone operation. Perfect for interactive CTAs, navigation, and primary controls.",
     },
@@ -58,7 +67,7 @@ export function SlideDesignForPortrait({ slide: _slide }: { slide: SlideItem }) 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDraggingCard) return;
     const deltaY = e.clientY - startY.current;
-    
+
     if (viewportRef.current) {
       const vh = viewportRef.current.clientHeight;
       const cardH = 110;
@@ -91,37 +100,37 @@ export function SlideDesignForPortrait({ slide: _slide }: { slide: SlideItem }) 
   };
 
   return (
-    <div className="relative h-auto w-full flex flex-col justify-start items-center p-2 text-center gap-3 select-none min-h-0">
+    <div className="relative h-auto w-full flex flex-col justify-start items-center p-2 text-center gap-3.5 select-none min-h-0">
       {/* Base Slide View Header */}
-      <div className="space-y-1 max-w-xs shrink-0">
-        <h3 className="text-xl font-bold text-white tracking-tight">Design for Portrait</h3>
-        <p className="text-xs text-white/70 font-medium leading-relaxed">
+      <div className="space-y-1.5 max-w-xs shrink-0">
+        <h3 className="text-xl font-semibold text-white tracking-tight">Design for Portrait</h3>
+        <p className="text-xs text-zinc-400 font-normal leading-relaxed">
           Optimize content placement for mobile viewports, thumb reach, and natural eye-gaze patterns.
         </p>
       </div>
 
-      {/* Streamlined Interactive Action Button */}
+      {/* Minimalist Ultra-Clean CTA Card */}
       <div className="w-full">
         <button
           type="button"
           onClick={() => setIsDrawerOpen(true)}
-          className="group relative w-full bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-md border border-emerald-500/40 hover:border-emerald-400/70 shadow-[0_0_20px_rgba(16,185,129,0.15)] hover:shadow-[0_0_30px_rgba(16,185,129,0.25)] active:scale-[0.98] text-white p-3.5 rounded-xl transition-all duration-200 flex items-center gap-3 cursor-pointer outline-none text-left overflow-hidden"
+          className="group relative w-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 active:scale-[0.98] text-white p-3.5 rounded-2xl transition-all duration-300 flex items-center gap-3 cursor-pointer outline-none text-left overflow-hidden shadow-lg backdrop-blur-md"
         >
-          {/* Subtle ambient light glow */}
-          <div className="absolute -right-6 -top-6 w-20 h-20 bg-emerald-500/10 rounded-full blur-xl group-hover:bg-emerald-500/20 transition-all duration-300 pointer-events-none" />
-
-          {/* Glowing Emerald Icon Badge */}
-          <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-emerald-500/30 group-hover:border-emerald-400/50 transition-all duration-200">
-            <Smartphone className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform duration-200" />
+          {/* High-Contrast Icon Badge */}
+          <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/10 text-white flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-colors duration-200">
+            <Smartphone className="w-4.5 h-4.5 text-white/90 group-hover:scale-110 transition-transform duration-200" />
           </div>
 
-          {/* Balanced Typography Text Block */}
+          {/* High-Contrast Minimal Typography */}
           <div className="flex-1 min-w-0">
-            <h4 className="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors leading-snug">
-              Explore how content placements affect retention
-            </h4>
-            <p className="text-[10px] text-slate-400 font-medium leading-tight mt-0.5">
-              Test vertical ergonomics in full viewport mode
+            <div className="flex items-center gap-1.5">
+              <h4 className="text-xs font-semibold text-white tracking-tight leading-snug">
+                Explore Content Placement
+              </h4>
+              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-white transition-colors duration-200" />
+            </div>
+            <p className="text-[10px] text-zinc-400 leading-tight mt-0.5 font-normal">
+              Test vertical ergonomics in full 9:16 mode
             </p>
           </div>
         </button>
@@ -137,23 +146,23 @@ export function SlideDesignForPortrait({ slide: _slide }: { slide: SlideItem }) 
 
             {/* Drawer container: full-height 100dvh overlay */}
             <div
-              className="relative w-full h-dvh max-w-xl mx-auto bg-slate-900 border-x border-white/10 flex flex-col pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] px-3 sm:px-5 gap-2.5 animate-in slide-in-from-bottom duration-300 overflow-hidden"
+              className="relative w-full h-dvh max-w-xl mx-auto bg-black border-x border-white/10 flex flex-col pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] px-3 sm:px-5 gap-2.5 animate-in slide-in-from-bottom duration-300 overflow-hidden"
               onClick={(e) => e.stopPropagation()}
               onPointerDown={(e) => e.stopPropagation()}
               onTouchStart={(e) => e.stopPropagation()}
             >
               {/* Header Handle Bar */}
-              <div className="w-12 h-1.5 bg-white/20 rounded-full mx-auto shrink-0 mb-1" />
+              <div className="w-10 h-1 bg-white/20 rounded-full mx-auto shrink-0 mb-1" />
 
               {/* Header Row */}
-              <div className="flex items-center justify-between shrink-0 pb-1 border-b border-white/10">
+              <div className="flex items-center justify-between shrink-0 pb-2 border-b border-white/10">
                 <div className="flex items-center gap-2">
-                  <Layout className="w-4 h-4 text-emerald-400" />
-                  <h4 className="text-sm font-bold text-white tracking-tight">Mobile Viewport Ergonomics</h4>
+                  <Layout className="w-4 h-4 text-zinc-300" />
+                  <h4 className="text-xs font-semibold text-white tracking-tight">Viewport Ergonomics Sandbox</h4>
                 </div>
                 <button
                   onClick={() => setIsDrawerOpen(false)}
-                  className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors cursor-pointer"
+                  className="p-1.5 rounded-full bg-white/5 hover:bg-white/15 text-zinc-400 hover:text-white transition-colors cursor-pointer"
                   aria-label="Close drawer"
                 >
                   <X className="w-4 h-4" />
@@ -163,17 +172,36 @@ export function SlideDesignForPortrait({ slide: _slide }: { slide: SlideItem }) 
               {/* Simulated 9:16 Mobile Phone Viewport (Drag & Drop Arena) */}
               <div
                 ref={viewportRef}
-                className="flex-1 min-h-0 w-full bg-slate-950 border border-white/20 rounded-2xl p-3 flex flex-col justify-between relative overflow-hidden shadow-inner touch-none"
+                className="flex-1 min-h-0 w-full bg-zinc-950 border border-white/15 rounded-3xl p-3 flex flex-col justify-between relative overflow-hidden shadow-2xl touch-none"
               >
                 {/* Phone Status Bar Top */}
-                <div className="flex items-center justify-between px-2 pt-0.5 pb-1.5 text-[10px] font-mono text-white/50 shrink-0 border-b border-white/5 z-0 pointer-events-none">
+                <div className="flex items-center justify-between px-2 pt-0.5 pb-2 text-[10px] font-mono text-zinc-500 shrink-0 border-b border-white/5 z-0 pointer-events-none">
                   <span>9:41</span>
-                  <div className="w-10 h-2 bg-white/20 rounded-full" />
+                  <div className="w-10 h-2 bg-white/15 rounded-full" />
                   <div className="flex items-center gap-1">
                     <span>5G</span>
-                    <div className="w-3.5 h-2 border border-white/50 rounded-xs flex items-center p-0.5">
-                      <div className="w-full h-full bg-white/70 rounded-xs" />
+                    <div className="w-3.5 h-2 border border-zinc-600 rounded-xs flex items-center p-0.5">
+                      <div className="w-full h-full bg-zinc-400 rounded-xs" />
                     </div>
+                  </div>
+                </div>
+
+                {/* Vertical Zone Indicators (Background Guides) */}
+                <div className="absolute inset-x-3 top-10 bottom-8 flex flex-col justify-between pointer-events-none z-0">
+                  <div className={`h-1/3 border-b border-dashed border-white/10 transition-colors duration-300 flex items-start pt-1 px-2 ${selectedPosition === "top" ? "bg-amber-500/5" : ""}`}>
+                    <span className={`text-[9px] font-mono tracking-wider ${selectedPosition === "top" ? "text-amber-400 font-semibold" : "text-zinc-600"}`}>
+                      01 / TOP ZONE (HARD REACH)
+                    </span>
+                  </div>
+                  <div className={`h-1/3 border-b border-dashed border-white/10 transition-colors duration-300 flex items-start pt-1 px-2 ${selectedPosition === "center" ? "bg-white/5" : ""}`}>
+                    <span className={`text-[9px] font-mono tracking-wider ${selectedPosition === "center" ? "text-zinc-200 font-semibold" : "text-zinc-600"}`}>
+                      02 / CENTER ZONE (EYE SWEEP)
+                    </span>
+                  </div>
+                  <div className={`h-1/3 transition-colors duration-300 flex items-start pt-1 px-2 ${selectedPosition === "bottom" ? "bg-emerald-500/5" : ""}`}>
+                    <span className={`text-[9px] font-mono tracking-wider ${selectedPosition === "bottom" ? "text-emerald-400 font-semibold" : "text-zinc-600"}`}>
+                      03 / BOTTOM ZONE (THUMB REACH)
+                    </span>
                   </div>
                 </div>
 
@@ -185,36 +213,36 @@ export function SlideDesignForPortrait({ slide: _slide }: { slide: SlideItem }) 
                     onPointerUp={handlePointerUp}
                     onPointerCancel={handlePointerUp}
                     style={{ transform: `translateY(${cardPosY}px)` }}
-                    className={`absolute z-10 w-full max-w-[275px] p-3.5 rounded-xl border shadow-xl flex flex-col gap-2 cursor-grab active:cursor-grabbing select-none transition-colors duration-200 ${currentNote.bgColor}`}
+                    className={`absolute z-10 w-full max-w-[280px] p-4 rounded-2xl border backdrop-blur-xl shadow-2xl flex flex-col gap-2.5 cursor-grab active:cursor-grabbing select-none transition-colors duration-300 bg-zinc-900/90 ${currentNote.accentBorder}`}
                   >
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-2">
                         <NoteIcon className={`w-4 h-4 ${currentNote.iconColor} shrink-0`} />
-                        <span className="text-[9px] font-bold tracking-widest px-2 py-0.5 rounded-xs uppercase bg-white/15 text-white">
-                          DRAG ME VERTICALLY
+                        <span className="text-[9px] font-mono font-medium tracking-widest px-2 py-0.5 rounded bg-white/10 text-zinc-200 uppercase border border-white/10">
+                          {currentNote.badgeText}
                         </span>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <span className="text-[9px] font-mono font-bold text-white/70 uppercase">
+                      <div className="flex items-center gap-1 text-zinc-400">
+                        <span className="text-[9px] font-mono uppercase tracking-wider">
                           {selectedPosition}
                         </span>
-                        <GripVertical className="w-3.5 h-3.5 text-white/50" />
+                        <GripVertical className="w-3.5 h-3.5 opacity-70" />
                       </div>
                     </div>
 
-                    <h5 className="text-xs font-bold text-white leading-tight">
+                    <h5 className="text-xs font-semibold text-white leading-tight tracking-tight">
                       {currentNote.title}
                     </h5>
 
-                    <p className={`text-[10px] leading-relaxed ${currentNote.textColor}`}>
+                    <p className={`text-[11px] leading-relaxed font-normal ${currentNote.textColor}`}>
                       {currentNote.description}
                     </p>
                   </div>
                 </div>
 
                 {/* Phone Home Indicator Bar Bottom */}
-                <div className="shrink-0 pt-1.5 z-0 pointer-events-none">
-                  <div className="w-24 h-1 bg-white/30 rounded-full mx-auto" />
+                <div className="shrink-0 pt-1 z-0 pointer-events-none">
+                  <div className="w-24 h-1 bg-white/20 rounded-full mx-auto" />
                 </div>
               </div>
             </div>
