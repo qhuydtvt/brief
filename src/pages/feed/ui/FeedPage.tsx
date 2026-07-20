@@ -27,8 +27,23 @@ export function FeedPage() {
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isHeaderHoveredRef = useRef(false);
 
-  // Draggable widget coordinate offset state
-  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+  // Draggable widget coordinate offset state with localStorage persistence
+  const [coordinates, setCoordinates] = useState<{ x: number; y: number }>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("brief_modes_widget_pos");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (typeof parsed?.x === "number" && typeof parsed?.y === "number") {
+            return parsed;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    }
+    return { x: 0, y: 0 };
+  });
 
   // Liked slides set (to toggle color state)
   const [likedSlides, setLikedSlides] = useState<Set<string>>(new Set());
@@ -95,10 +110,18 @@ export function FeedPage() {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { delta } = event;
-    setCoordinates((prev) => ({
-      x: prev.x + delta.x,
-      y: prev.y + delta.y,
-    }));
+    setCoordinates((prev) => {
+      const next = {
+        x: prev.x + delta.x,
+        y: prev.y + delta.y,
+      };
+      try {
+        localStorage.setItem("brief_modes_widget_pos", JSON.stringify(next));
+      } catch (e) {
+        console.error(e);
+      }
+      return next;
+    });
   };
 
   const currentSlides = mode === "view" ? staticSlides : dynamicSlides;

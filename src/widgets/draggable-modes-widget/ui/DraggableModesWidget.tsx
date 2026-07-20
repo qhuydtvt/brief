@@ -82,11 +82,11 @@ export function DraggableModesWidget({ coordinates, modeSwitcherSlot }: Draggabl
       {...attributes}
       {...listeners}
       onClick={handleClick}
-      className={`fixed right-4 top-1/2 -translate-y-1/2 flex flex-col items-center z-50 backdrop-blur-md border select-none touch-none cursor-grab active:cursor-grabbing hover:border-primary/50 hover:opacity-100 hover:bg-card/95 focus-within:opacity-100 focus-within:bg-card/95 transition-[opacity,background-color,border-color,padding,border-radius,box-shadow] duration-500 ease-out ${
+      className={`fixed right-4 top-1/2 -translate-y-1/2 flex flex-col items-center z-50 backdrop-blur-md border rounded-2xl select-none touch-none cursor-grab active:cursor-grabbing hover:border-primary/50 hover:opacity-100 hover:bg-card/95 focus-within:opacity-100 focus-within:bg-card/95 transition-[opacity,background-color,border-color,box-shadow] duration-300 ease-out ${
         isInteracting
           ? "opacity-100 bg-card/95 border-border/80 shadow-2xl"
           : "opacity-70 bg-card/70 border-border/60 shadow-md"
-      } ${isExpanded ? "p-3.5 gap-y-3 rounded-2xl" : "px-3.5 py-2.5 rounded-full"}`}
+      } ${isExpanded ? "p-3.5 gap-y-3" : "px-3.5 py-2.5"}`}
     >
       {!isExpanded ? (
         <div className="flex items-center gap-x-2 text-xs font-semibold text-foreground pointer-events-none">
