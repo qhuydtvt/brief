@@ -129,11 +129,7 @@ export function FeedPage() {
   return (
     <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
       <PortraitLockOverlay />
-      <div className="h-dvh w-full bg-background text-foreground transition-colors duration-300 font-sans relative overflow-hidden">
-
-        {/* Background gradients */}
-        <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-500/10 via-background to-background dark:from-indigo-950/20 pointer-events-none" />
-        
+      <div className="h-dvh w-full bg-black text-foreground transition-colors duration-300 font-sans relative overflow-hidden">
         {/* Floating Right Modes Widget */}
         <DraggableModesWidget 
           coordinates={coordinates} 
@@ -151,14 +147,16 @@ export function FeedPage() {
         />
 
         {/* Main Content Area */}
-        <main className="w-full h-full relative">
-          <MobileSimulatorFeed 
-            slides={currentSlides}
-            mode={mode}
-            likedSlides={likedSlides}
-            onLike={handleLike}
-            onScroll={handleScroll}
-          />
+        <main className="w-full h-full flex items-center justify-center relative">
+          <div className="w-full h-full md:aspect-[9/16] md:h-[85vh] md:max-h-[880px] md:max-w-[440px] md:rounded-[36px] md:border md:border-white/15 md:shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden relative">
+            <MobileSimulatorFeed 
+              slides={currentSlides}
+              mode={mode}
+              likedSlides={likedSlides}
+              onLike={handleLike}
+              onScroll={handleScroll}
+            />
+          </div>
         </main>
       </div>
     </DndContext>
