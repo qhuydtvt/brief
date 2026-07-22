@@ -6,7 +6,7 @@ import { ChevronRight, ChevronLeft, Brain, X, ArrowUpRight, HelpCircle } from "l
 interface Quiz {
   id: string;
   question: string;
-  options: { id: string; boldText: string; restText: string; isCorrect: boolean }[];
+  options: { id: string; text: string; isCorrect: boolean }[];
   explanation: string;
 }
 
@@ -15,10 +15,10 @@ const QUIZZES: Quiz[] = [
     id: "q1",
     question: "What keeps mobile readers engaged?",
     options: [
-      { id: "a", boldText: "Long paragraphs:", restText: " provide deep context.", isCorrect: false },
-      { id: "b", boldText: "Short text:", restText: " boosts quick comprehension.", isCorrect: true },
-      { id: "c", boldText: "Fancy words:", restText: " impress the audience.", isCorrect: false },
-      { id: "d", boldText: "Tiny text:", restText: " fits more information.", isCorrect: false },
+      { id: "a", text: "Long paragraphs that explain everything in detail.", isCorrect: false },
+      { id: "b", text: "Brevity and chunking ideas into bite-sized text.", isCorrect: true },
+      { id: "c", text: "Sophisticated vocabulary to impress the reader.", isCorrect: false },
+      { id: "d", text: "Miniature fonts to pack more facts onto the screen.", isCorrect: false },
     ],
     explanation: "Keep it brief to match short mobile attention spans.",
   },
@@ -26,10 +26,10 @@ const QUIZZES: Quiz[] = [
     id: "q2",
     question: "Where do high-impact words belong?",
     options: [
-      { id: "a", boldText: "Middle section:", restText: " hides them carefully.", isCorrect: false },
-      { id: "b", boldText: "The end:", restText: " builds up suspense.", isCorrect: false },
-      { id: "c", boldText: "Very beginning:", restText: " grabs scanning eyes first.", isCorrect: true },
-      { id: "d", boldText: "Random spots:", restText: " surprises the reader.", isCorrect: false },
+      { id: "a", text: "Buried in the middle of sentences.", isCorrect: false },
+      { id: "b", text: "Placed at the very end to build anticipation.", isCorrect: false },
+      { id: "c", text: "Front-loaded at the start of each line or bullet.", isCorrect: true },
+      { id: "d", text: "Scattered randomly to add visual variety.", isCorrect: false },
     ],
     explanation: "Start strong because mobile readers scan left-to-right quickly.",
   },
@@ -37,10 +37,10 @@ const QUIZZES: Quiz[] = [
     id: "q3",
     question: "What should visuals and audio do?",
     options: [
-      { id: "a", boldText: "Repeat text:", restText: " say the exact same thing.", isCorrect: false },
-      { id: "b", boldText: "Distract users:", restText: " look cool but confusing.", isCorrect: false },
-      { id: "c", boldText: "Replace text:", restText: " show rather than tell.", isCorrect: true },
-      { id: "d", boldText: "Auto-play sound:", restText: " blast audio unexpectedly.", isCorrect: false },
+      { id: "a", text: "Repeat the exact same text read out loud.", isCorrect: false },
+      { id: "b", text: "Look visually stunning even if they distract from the message.", isCorrect: false },
+      { id: "c", text: "Complement the text to build double memory pathways.", isCorrect: true },
+      { id: "d", text: "Play automatically with loud background sounds.", isCorrect: false },
     ],
     explanation: "Show concepts visually to save screen space and reading time.",
   },
@@ -48,10 +48,10 @@ const QUIZZES: Quiz[] = [
     id: "q4",
     question: "Why personalize your content?",
     options: [
-      { id: "a", boldText: "Formal tone:", restText: " sounds highly professional.", isCorrect: false },
-      { id: "b", boldText: "Broad appeal:", restText: " talks to everyone loosely.", isCorrect: false },
-      { id: "c", boldText: "Data collection:", restText: " tracks user behavior.", isCorrect: false },
-      { id: "d", boldText: "Direct connection:", restText: " user feels spoken to.", isCorrect: true },
+      { id: "a", text: "It establishes a highly formal and professional tone.", isCorrect: false },
+      { id: "b", text: "It keeps the message generic so it applies to everyone.", isCorrect: false },
+      { id: "c", text: "It allows you to collect and track more user data.", isCorrect: false },
+      { id: "d", text: "It makes the reader feel directly spoken to.", isCorrect: true },
     ],
     explanation: "Use 'you' to instantly grab the user's focus.",
   },
@@ -126,14 +126,14 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
             {/* Drawer container */}
             <div
-              className="relative w-full h-dvh max-w-xl mx-auto bg-black border-x border-white/10 flex flex-col pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] px-4 sm:px-6 gap-3 animate-in slide-in-from-bottom duration-300 overflow-hidden"
+              className="relative w-full h-dvh max-w-xl mx-auto bg-black border-x border-white/10 flex flex-col pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] px-2.5 sm:px-4 gap-2 animate-in slide-in-from-bottom duration-300 overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header Handle Bar */}
-              <div className="w-10 h-1 bg-white/20 rounded-full mx-auto shrink-0 mb-1" />
+              <div className="w-10 h-1 bg-white/20 rounded-full mx-auto shrink-0 mb-0.5" />
 
               {/* Drawer Header Row */}
-              <div className="flex items-center justify-between shrink-0 pb-2.5 border-b border-white/10">
+              <div className="flex items-center justify-between shrink-0 pb-1.5 border-b border-white/10">
                 <div className="flex items-center gap-2">
                   <HelpCircle className="w-4 h-4 text-zinc-300" />
                   <h4 className="text-xs font-semibold text-white tracking-tight">Active Recall Micro-Quiz</h4>
@@ -148,18 +148,18 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
               </div>
 
               {/* Main Quiz Area inside Drawer */}
-              <div className="flex-1 min-h-0 w-full bg-zinc-950 border border-white/15 rounded-3xl p-4 flex flex-col justify-between overflow-y-auto no-scrollbar shadow-2xl">
+              <div className="flex-1 min-h-0 w-full bg-zinc-950 rounded-3xl p-3 sm:p-4 flex flex-col justify-between overflow-y-auto no-scrollbar shadow-2xl">
                 
                 {/* Top Badge Row */}
-                <div className="w-full text-left shrink-0 mb-2">
+                <div className="w-full text-left shrink-0 mb-1">
                   <span className="text-[10px] font-mono font-medium tracking-wider text-indigo-300 uppercase px-2 py-0.5 rounded bg-indigo-500/20 border border-indigo-400/30 inline-block">
                     Question {currentIndex + 1} of {QUIZZES.length}
                   </span>
                 </div>
 
                 {/* Central Space: Question & Options */}
-                <div className="flex flex-col gap-5 w-full flex-1 justify-center my-auto">
-                  <h3 className="text-xl font-bold text-white tracking-tight leading-snug text-center mb-3 px-2">
+                <div className="flex flex-col gap-3.5 w-full flex-1 justify-center my-auto">
+                  <h3 className="text-xl font-bold text-white tracking-tight leading-snug text-center mb-1.5 px-1">
                     {activeQuiz.question}
                   </h3>
 
@@ -167,18 +167,14 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                     {activeQuiz.options.map((option) => {
                       const isSelected = selectedOptionId === option.id;
                       let btnStyle = "bg-white/5 hover:bg-white/15 border-white/10 text-white";
-                      let restTextStyle = "text-white";
 
                       if (isAnswered) {
                         if (option.isCorrect) {
                           btnStyle = "bg-emerald-500/20 border-emerald-400/60 text-emerald-100 font-semibold";
-                          restTextStyle = "text-emerald-100";
                         } else if (isSelected) {
                           btnStyle = "bg-rose-500/20 border-rose-400/60 text-rose-100 font-semibold animate-shake";
-                          restTextStyle = "text-rose-100";
                         } else {
                           btnStyle = "bg-white/5 border-white/5 text-white/50";
-                          restTextStyle = "text-white/50";
                         }
                       }
 
@@ -187,10 +183,9 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                           key={option.id}
                           onClick={() => handleSelect(option.id)}
                           disabled={isAnswered}
-                          className={`w-full py-3.5 px-4 rounded-xl border text-left text-sm leading-snug transition-all active:scale-[0.99] cursor-pointer ${btnStyle}`}
+                          className={`w-full py-3 px-3.5 rounded-xl border text-left text-sm leading-snug transition-all active:scale-[0.99] cursor-pointer ${btnStyle}`}
                         >
-                          <strong className="font-bold mr-1">{option.boldText}</strong>
-                          <span className={restTextStyle}>{option.restText}</span>
+                          <span>{option.text}</span>
                         </button>
                       );
                     })}
