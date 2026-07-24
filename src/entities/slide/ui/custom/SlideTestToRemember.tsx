@@ -396,14 +396,14 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
                       <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed text-center max-w-xs px-2 mt-1">
                         {score === 4 
-                          ? "You got all four questions right. These principles are now wired in." 
+                          ? "These principles are now wired in." 
                           : score === 3 
-                            ? "You got three questions right. Repeat tomorrow to lock these concepts in." 
+                            ? "Repeat tomorrow to lock these concepts in." 
                             : score === 2 
-                              ? "You got two questions right. Space your next review to build connections."
+                              ? "Space your next review to build connections."
                               : score === 1
-                                ? "You got one question right. Correcting mistakes triggers learning—try again."
-                                : "No questions were correct yet. Recall errors prime your brain, so try again."
+                                ? "Correcting mistakes triggers learning—try again."
+                                : "Recall errors prime your brain, so try again."
                         }
                       </p>
 
