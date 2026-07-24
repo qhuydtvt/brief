@@ -529,15 +529,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                                   {activeQuiz!.explanation}
                                 </p>
                               </div>
-                              {currentIndex === QUIZZES.length - 1 && (
-                                <button
-                                  onClick={() => setCurrentIndex(QUIZZES.length)}
-                                  className="w-full py-2.5 px-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5 bg-white text-black hover:bg-white/90 active:scale-[0.98] shadow-[0_0_15px_rgba(255,255,255,0.15)] animate-in fade-in slide-in-from-bottom-2 duration-300"
-                                >
-                                  <span>Finish & See Results</span>
-                                  <ChevronRight className="w-3.5 h-3.5 animate-pulse" />
-                                </button>
-                              )}
+
                             </div>
                           )}
                         </div>
