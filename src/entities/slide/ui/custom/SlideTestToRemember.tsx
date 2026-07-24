@@ -481,7 +481,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                                   <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${themeConfig.progressDot}`} />
                                   <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${themeConfig.progressDot}`} />
                                 </span>
-                                NEXT IN {(timeLeft / 1000).toFixed(1)}S
+                                NEXT IN {Math.ceil(timeLeft / 1000)}S
                               </span>
                             )}
                           </div>
