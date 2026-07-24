@@ -8,6 +8,7 @@ interface Quiz {
   question: string;
   options: { id: string; text: string; isCorrect: boolean }[];
   explanation: string;
+  theme: "indigo" | "amber" | "emerald" | "rose";
 }
 
 const QUIZZES: Quiz[] = [
@@ -21,6 +22,7 @@ const QUIZZES: Quiz[] = [
       { id: "d", text: "Miniature fonts to pack more facts onto the screen.", isCorrect: false },
     ],
     explanation: "Keep it brief to match short mobile attention spans.",
+    theme: "indigo",
   },
   {
     id: "q2",
@@ -32,6 +34,7 @@ const QUIZZES: Quiz[] = [
       { id: "d", text: "Scattered randomly to add visual variety.", isCorrect: false },
     ],
     explanation: "Start strong because mobile readers scan left-to-right quickly.",
+    theme: "amber",
   },
   {
     id: "q3",
@@ -43,6 +46,7 @@ const QUIZZES: Quiz[] = [
       { id: "d", text: "Play automatically with loud background sounds.", isCorrect: false },
     ],
     explanation: "Show concepts visually to save screen space and reading time.",
+    theme: "emerald",
   },
   {
     id: "q4",
@@ -54,8 +58,56 @@ const QUIZZES: Quiz[] = [
       { id: "d", text: "It makes the reader feel directly spoken to.", isCorrect: true },
     ],
     explanation: "Use 'you' to instantly grab the user's focus.",
+    theme: "rose",
   },
 ];
+
+const THEMES: Record<"indigo" | "amber" | "emerald" | "rose", {
+  badgeText: string;
+  badgeBg: string;
+  badgeBorder: string;
+  progressDot: string;
+  btnHoverBorder: string;
+  headerIcon: string;
+  rgb: string;
+}> = {
+  indigo: {
+    badgeText: "text-indigo-300",
+    badgeBg: "bg-indigo-500/20",
+    badgeBorder: "border-indigo-400/30",
+    progressDot: "bg-indigo-500",
+    btnHoverBorder: "hover:border-indigo-500/30",
+    headerIcon: "text-indigo-400",
+    rgb: "99, 102, 241",
+  },
+  amber: {
+    badgeText: "text-amber-300",
+    badgeBg: "bg-amber-500/20",
+    badgeBorder: "border-amber-400/30",
+    progressDot: "bg-amber-500",
+    btnHoverBorder: "hover:border-amber-500/30",
+    headerIcon: "text-amber-400",
+    rgb: "245, 158, 11",
+  },
+  emerald: {
+    badgeText: "text-emerald-300",
+    badgeBg: "bg-emerald-500/20",
+    badgeBorder: "border-emerald-400/30",
+    progressDot: "bg-emerald-500",
+    btnHoverBorder: "hover:border-emerald-500/30",
+    headerIcon: "text-emerald-400",
+    rgb: "16, 185, 129",
+  },
+  rose: {
+    badgeText: "text-rose-300",
+    badgeBg: "bg-rose-500/20",
+    badgeBorder: "border-rose-400/30",
+    progressDot: "bg-rose-500",
+    btnHoverBorder: "hover:border-rose-500/30",
+    headerIcon: "text-rose-400",
+    rgb: "244, 63, 94",
+  },
+};
 
 export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -64,6 +116,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
   const activeQuiz = QUIZZES[currentIndex];
   const isAnswered = selectedOptionId !== null;
+  const themeConfig = THEMES[activeQuiz.theme];
 
   const handleSelect = (optionId: string) => {
     setSelectedOptionId(optionId);
@@ -135,7 +188,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
               {/* Drawer Header Row */}
               <div className="flex items-center justify-between shrink-0 pb-1.5 border-b border-white/10">
                 <div className="flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 text-zinc-300" />
+                  <HelpCircle className={`w-4 h-4 transition-colors duration-500 ${themeConfig.headerIcon}`} />
                   <h4 className="text-xs font-semibold text-white tracking-tight">Active Recall Micro-Quiz</h4>
                 </div>
                 <button
@@ -148,98 +201,113 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
               </div>
 
               {/* Main Quiz Area inside Drawer */}
-              <div className="flex-1 min-h-0 w-full bg-zinc-950 rounded-3xl p-3 sm:p-4 flex flex-col justify-between overflow-y-auto no-scrollbar shadow-2xl">
-                
-                {/* Top Badge Row */}
-                <div className="w-full text-left shrink-0 mb-1">
-                  <span className="text-[10px] font-mono font-medium tracking-wider text-indigo-300 uppercase px-2 py-0.5 rounded bg-indigo-500/20 border border-indigo-400/30 inline-block">
-                    Question {currentIndex + 1} of {QUIZZES.length}
-                  </span>
-                </div>
+              <div className="relative flex-1 min-h-0 w-full bg-black rounded-3xl flex flex-col overflow-hidden border border-white/10">
+                {/* Smooth transition gradient backdrop */}
+                <div 
+                  className="absolute inset-0 transition-all duration-500 ease-in-out pointer-events-none" 
+                  style={{
+                    background: `linear-gradient(to bottom, rgba(${themeConfig.rgb}, 0.15) 0%, rgba(9, 9, 11, 0.8) 60%, rgba(0, 0, 0, 1))`
+                  }}
+                />
 
-                {/* Central Space: Question & Options */}
-                <div className="flex flex-col gap-3.5 w-full flex-1 justify-center my-auto">
-                  <h3 className="text-xl font-bold text-white tracking-tight leading-snug text-center mb-1.5 px-1">
-                    {activeQuiz.question}
-                  </h3>
-
-                  <div className="flex flex-col gap-3.5 w-full">
-                    {activeQuiz.options.map((option, index) => {
-                      const isSelected = selectedOptionId === option.id;
-                      const letter = ["A", "B", "C", "D"][index];
-                      let btnStyle = "bg-white/5 hover:bg-white/15 border-white/10 text-white";
-                      let badgeStyle = "bg-white/10 text-white/85";
-
-                      if (isAnswered) {
-                        if (option.isCorrect) {
-                          btnStyle = "bg-emerald-500/20 border-emerald-400/60 text-emerald-100 font-semibold";
-                          badgeStyle = "bg-emerald-500/30 text-emerald-300";
-                        } else if (isSelected) {
-                          btnStyle = "bg-rose-500/20 border-rose-400/60 text-rose-100 font-semibold animate-shake";
-                          badgeStyle = "bg-rose-500/30 text-rose-300";
-                        } else {
-                          btnStyle = "bg-white/5 border-white/5 text-white/50";
-                          badgeStyle = "bg-white/5 text-white/30";
-                        }
-                      }
-
-                      return (
-                        <button
-                          key={option.id}
-                          onClick={() => handleSelect(option.id)}
-                          disabled={isAnswered}
-                          className={`w-full py-2.5 px-3 rounded-xl border transition-all active:scale-[0.99] cursor-pointer flex items-center gap-3 ${btnStyle}`}
-                        >
-                          <span className={`w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0 transition-colors ${badgeStyle}`}>
-                            {letter}
-                          </span>
-                          <span className="flex-1 text-left text-sm leading-snug">{option.text}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Micro-Explanation & Bottom Navigation */}
-                <div className="w-full shrink-0 pt-2 flex flex-col items-center gap-3 mt-2">
-                  <div className="min-h-[36px] w-full flex items-center justify-center">
-                    {isAnswered && (
-                      <div className="px-3 py-2 bg-emerald-500/10 rounded-xl w-full text-center border border-emerald-500/20 animate-fadeIn">
-                        <p className="text-xs text-emerald-300 font-medium leading-normal">
-                          {activeQuiz.explanation}
-                        </p>
-                      </div>
-                    )}
-                  </div>
+                {/* Main Content (Scrollable wrapper inside) */}
+                <div className="relative z-10 flex-1 min-h-0 w-full p-3 sm:p-4 flex flex-col justify-between overflow-y-auto no-scrollbar">
                   
-                  <div className="flex items-center justify-between w-full">
-                    <button
-                      onClick={handlePrev}
-                      className="p-2 rounded-full text-zinc-400 bg-white/5 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                      aria-label="Previous question"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    
-                    <div className="flex gap-1.5">
-                      {QUIZZES.map((_, idx) => (
-                        <div 
-                          key={idx} 
-                          className={`w-2 h-2 rounded-full transition-colors duration-200 ${idx === currentIndex ? 'bg-white scale-110' : 'bg-white/20'}`} 
-                        />
-                      ))}
+                  {/* Top Badge Row */}
+                  <div className="w-full text-left shrink-0 mb-1">
+                    <span className={`text-[10px] font-mono font-medium tracking-wider uppercase px-2 py-0.5 rounded border inline-block transition-all duration-500 ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
+                      Question {currentIndex + 1} of {QUIZZES.length}
+                    </span>
+                  </div>
+
+                  {/* Central Space: Question & Options */}
+                  <div className="flex flex-col gap-3.5 w-full flex-1 justify-center my-auto">
+                    <h3 className="text-xl font-bold text-white tracking-tight leading-snug text-center mb-1.5 px-1">
+                      {activeQuiz.question}
+                    </h3>
+
+                    <div className="flex flex-col gap-3.5 w-full">
+                      {activeQuiz.options.map((option, index) => {
+                        const isSelected = selectedOptionId === option.id;
+                        const letter = ["A", "B", "C", "D"][index];
+                        let btnStyle = `bg-white/5 border-white/10 text-white ${themeConfig.btnHoverBorder}`;
+                        let badgeStyle = "bg-white/10 text-white/85";
+
+                        if (isAnswered) {
+                          if (option.isCorrect) {
+                            btnStyle = "bg-emerald-500/20 border-emerald-400/60 text-emerald-100 font-semibold";
+                            badgeStyle = "bg-emerald-500/30 text-emerald-300";
+                          } else if (isSelected) {
+                            btnStyle = "bg-rose-500/20 border-rose-400/60 text-rose-100 font-semibold animate-shake";
+                            badgeStyle = "bg-rose-500/30 text-rose-300";
+                          } else {
+                            btnStyle = "bg-white/5 border-white/5 text-white/50";
+                            badgeStyle = "bg-white/5 text-white/30";
+                          }
+                        }
+
+                        return (
+                          <button
+                            key={option.id}
+                            onClick={() => handleSelect(option.id)}
+                            disabled={isAnswered}
+                            className={`w-full py-2.5 px-3 rounded-xl border transition-all active:scale-[0.99] cursor-pointer flex items-center gap-3 ${btnStyle}`}
+                          >
+                            <span className={`w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0 transition-colors ${badgeStyle}`}>
+                              {letter}
+                            </span>
+                            <span className="flex-1 text-left text-sm leading-snug">{option.text}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Micro-Explanation & Bottom Navigation */}
+                  <div className="w-full shrink-0 pt-2 flex flex-col items-center gap-3 mt-2">
+                    <div className="min-h-[36px] w-full flex items-center justify-center">
+                      {isAnswered && (
+                        <div className="px-3 py-2 bg-emerald-500/10 rounded-xl w-full text-center border border-emerald-500/20 animate-fadeIn">
+                          <p className="text-xs text-emerald-300 font-medium leading-normal">
+                            {activeQuiz.explanation}
+                          </p>
+                        </div>
+                      )}
                     </div>
                     
-                    <button
-                      onClick={handleNext}
-                      className="p-2 rounded-full text-zinc-400 bg-white/5 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                      aria-label="Next question"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
+                    <div className="flex items-center justify-between w-full">
+                      <button
+                        onClick={handlePrev}
+                        className="p-2 rounded-full text-zinc-400 bg-white/5 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                        aria-label="Previous question"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+                      
+                      <div className="flex gap-1.5">
+                        {QUIZZES.map((_, idx) => (
+                          <div 
+                            key={idx} 
+                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                              idx === currentIndex 
+                                ? `${themeConfig.progressDot} scale-125` 
+                                : 'bg-white/20'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      
+                      <button
+                        onClick={handleNext}
+                        className="p-2 rounded-full text-zinc-400 bg-white/5 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                        aria-label="Next question"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                    </div>
                   </div>
-                </div>
 
+                </div>
               </div>
             </div>
           </div>,
