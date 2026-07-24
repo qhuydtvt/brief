@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, useRef, type PointerEvent } from "react";
+import { useState, useEffect, type PointerEvent } from "react";
 import { createPortal } from "react-dom";
 import type { SlideItem } from "~/entities/slide/model/types";
 import {
+  ChevronRight,
+  ChevronLeft,
   Brain,
   X,
   ArrowUpRight,
@@ -131,7 +133,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   const [autoAdvanceActive, setAutoAdvanceActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(5000);
   const [isPaused, setIsPaused] = useState(false);
-  const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
+
 
   const isResultsScreen = currentIndex === QUIZZES.length;
 
@@ -187,41 +189,18 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
     if ((e.target as HTMLElement).closest("button")) {
       return;
     }
-    pointerStartRef.current = { x: e.clientX, y: e.clientY };
     setIsPaused(true);
   };
 
-  const handlePointerUp = (e: PointerEvent<HTMLDivElement>) => {
-    if (pointerStartRef.current) {
-      const diffX = e.clientX - pointerStartRef.current.x;
-      const diffY = e.clientY - pointerStartRef.current.y;
-      
-      // Horizontal swipe threshold of 60px
-      if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX < 0) {
-          // Swipe left (Next)
-          if (hasCompleted || isAnswered) {
-            handleNext();
-          }
-        } else {
-          // Swipe right (Prev)
-          if (hasCompleted) {
-            handlePrev();
-          }
-        }
-      }
-    }
-    pointerStartRef.current = null;
+  const handlePointerUp = () => {
     setIsPaused(false);
   };
 
   const handlePointerLeave = () => {
-    pointerStartRef.current = null;
     setIsPaused(false);
   };
 
   const handlePointerCancel = () => {
-    pointerStartRef.current = null;
     setIsPaused(false);
   };
 
@@ -607,7 +586,16 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                           </div>
                         )}
                         
-                        <div className="flex items-center justify-center w-full py-2">
+                        <div className="flex items-center justify-between w-full">
+                          <button
+                            onClick={handlePrev}
+                            disabled={!hasCompleted || currentIndex === 0}
+                            className="p-2 rounded-full text-zinc-400 bg-white/5 hover:text-white hover:bg-white/10 transition-colors cursor-pointer disabled:opacity-20 disabled:pointer-events-none"
+                            aria-label="Previous question"
+                          >
+                            <ChevronLeft className="w-5 h-5" />
+                          </button>
+
                           <div className="flex gap-1.5">
                             {QUIZZES.map((_, idx) => (
                               <div 
@@ -620,6 +608,15 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                               />
                             ))}
                           </div>
+
+                          <button
+                            onClick={handleNext}
+                            disabled={!hasCompleted && !isAnswered}
+                            className="p-2 rounded-full text-zinc-400 bg-white/5 hover:text-white hover:bg-white/10 transition-colors cursor-pointer disabled:opacity-20 disabled:pointer-events-none"
+                            aria-label="Next question"
+                          >
+                            <ChevronRight className="w-5 h-5" />
+                          </button>
                         </div>
                       </div>
                     </>
