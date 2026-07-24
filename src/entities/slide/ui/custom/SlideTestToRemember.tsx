@@ -337,143 +337,144 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                   
                   {isResultsScreen ? (
                     /* Results view */
-                    <div className="flex flex-col items-center justify-center gap-3.5 py-2 w-full flex-1 my-auto animate-in fade-in zoom-in-95 duration-500">
+                    <div className="flex flex-col items-center justify-between w-full h-full flex-1 py-3 animate-in fade-in zoom-in-95 duration-500">
                       
-                      {/* Icon Badge */}
-                      <div className={`w-14 h-14 rounded-2xl bg-white/5 border ${themeConfig.badgeBorder} flex items-center justify-center relative overflow-hidden`}>
-                        {/* Glow backdrop */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
-                        {score === 4 ? (
-                          <Trophy className="w-7 h-7 text-amber-400 animate-pulse" />
-                        ) : score === 3 ? (
-                          <Award className="w-7 h-7 text-emerald-400 animate-pulse" />
-                        ) : (
-                          <Brain className={`w-7 h-7 ${themeConfig.headerIcon} animate-pulse`} />
-                        )}
+                      {/* Top Section (Trophy badge, Title, Subtitle celebration) */}
+                      <div className="flex flex-col items-center gap-4 text-center mt-6">
+                        {/* Icon Badge */}
+                        <div className={`w-18 h-18 rounded-3xl bg-white/5 border ${themeConfig.badgeBorder} flex items-center justify-center relative overflow-hidden shadow-lg`}>
+                          {/* Glow backdrop */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
+                          {score === 4 ? (
+                            <Trophy className="w-9 h-9 text-amber-400 animate-pulse" />
+                          ) : score === 3 ? (
+                            <Award className="w-9 h-9 text-emerald-400 animate-pulse" />
+                          ) : (
+                            <Brain className={`w-9 h-9 ${themeConfig.headerIcon} animate-pulse`} />
+                          )}
+                        </div>
+
+                        {/* Status celebration text */}
+                        <div className="flex flex-col gap-2.5 items-center">
+                          <h3 className="text-3xl font-black text-white tracking-tight leading-none">
+                            {score === 4 
+                              ? "Perfect Score" 
+                              : score === 3 
+                                ? "Strong Score" 
+                                : score === 2 
+                                  ? "Halfway There" 
+                                  : score === 1
+                                    ? "Room to Grow"
+                                    : "Keep Practicing"
+                            }
+                          </h3>
+                          <p className="text-sm text-zinc-300 max-w-xs px-4 leading-relaxed font-medium">
+                            {score === 4 
+                              ? "These principles are now wired in." 
+                              : score === 3 
+                                ? "Repeat tomorrow to lock these concepts in." 
+                                : score === 2 
+                                  ? "Space your next review to build connections."
+                                  : score === 1
+                                    ? "Correcting mistakes triggers learning—try again."
+                                    : "Recall errors prime your brain, so try again."
+                            }
+                          </p>
+                        </div>
                       </div>
 
-                      {/* Status celebration text */}
-                      <div className="flex flex-col gap-1 items-center text-center">
-                        <h3 className="text-xl font-extrabold text-white tracking-tight">
-                          {score === 4 
-                            ? "Perfect Score" 
-                            : score === 3 
-                              ? "Strong Score" 
-                              : score === 2 
-                                ? "Halfway There" 
-                                : score === 1
-                                  ? "Room to Grow"
-                                  : "Keep Practicing"
-                          }
-                        </h3>
-                        <p className="text-xs text-zinc-400 max-w-xs px-2 leading-relaxed">
-                          {score === 4 
-                            ? "These principles are now wired in." 
-                            : score === 3 
-                              ? "Repeat tomorrow to lock these concepts in." 
-                              : score === 2 
-                                ? "Space your next review to build connections."
-                                : score === 1
-                                  ? "Correcting mistakes triggers learning—try again."
-                                  : "Recall errors prime your brain, so try again."
-                          }
-                        </p>
-                      </div>
-
-                      {/* Review breakdown Box */}
-                      <div className="w-full max-w-sm bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col gap-2.5">
-                        <div className="flex items-center justify-between px-1">
-                          <div className="flex items-center gap-2">
+                      {/* Middle Section (Review questions) - Centered in bottom half of vertically centered area */}
+                      <div className="w-full max-w-sm flex-1 flex flex-col justify-center my-auto min-h-0 pt-4 pb-2">
+                        {/* Review breakdown Box */}
+                        <div className="w-full bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col gap-2.5">
+                          <div className="flex items-center gap-2 px-1">
                             <h4 className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 text-left">
                               Review Questions
                             </h4>
-                            {/* Score Pill folded here! */}
+                            {/* Score Pill folded here */}
                             <span className={`text-[9px] font-mono font-semibold tracking-wider uppercase px-2 py-0.25 rounded-full border ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
                               Recall: {score}/{QUIZZES.length}
                             </span>
                           </div>
-                          <span className="text-[9px] font-mono text-zinc-500 uppercase">
-                            Question {selectedReviewIndex + 1} of {QUIZZES.length}
-                          </span>
-                        </div>
 
-                        {/* Interactive circles row */}
-                        <div className="flex justify-center gap-3 py-1">
-                          {QUIZZES.map((quiz, idx) => {
-                            const selectedId = userAnswers[quiz.id];
-                            const option = quiz.options.find(opt => opt.id === selectedId);
+                          {/* Interactive circles row */}
+                          <div className="flex justify-center gap-3 py-1">
+                            {QUIZZES.map((quiz, idx) => {
+                              const selectedId = userAnswers[quiz.id];
+                              const option = quiz.options.find(opt => opt.id === selectedId);
+                              const isCorrect = option?.isCorrect ?? false;
+                              const isSelected = idx === selectedReviewIndex;
+
+                              return (
+                                <button
+                                  key={quiz.id}
+                                  onClick={() => setSelectedReviewIndex(idx)}
+                                  className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs border transition-all cursor-pointer relative ${
+                                    isCorrect 
+                                      ? isSelected
+                                        ? 'bg-emerald-500/25 text-emerald-300 border-emerald-400/80 ring-2 ring-emerald-500/30'
+                                        : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
+                                      : isSelected
+                                        ? 'bg-rose-500/25 text-rose-300 border-rose-400/80 ring-2 ring-rose-500/30'
+                                        : 'bg-rose-500/10 text-rose-400 border-rose-500/20 hover:bg-rose-500/20'
+                                  }`}
+                                >
+                                  {idx + 1}
+                                  {isSelected && (
+                                    <span className={`absolute -bottom-1 w-1 h-1 rounded-full ${isCorrect ? 'bg-emerald-400' : 'bg-rose-400'}`} />
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          {/* Details container */}
+                          {(() => {
+                            const selectedQuiz = QUIZZES[selectedReviewIndex];
+                            const selectedId = userAnswers[selectedQuiz.id];
+                            const option = selectedQuiz.options.find(opt => opt.id === selectedId);
                             const isCorrect = option?.isCorrect ?? false;
-                            const isSelected = idx === selectedReviewIndex;
 
                             return (
                               <button
-                                key={quiz.id}
-                                onClick={() => setSelectedReviewIndex(idx)}
-                                className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs border transition-all cursor-pointer relative ${
-                                  isCorrect 
-                                    ? isSelected
-                                      ? 'bg-emerald-500/25 text-emerald-300 border-emerald-400/80 ring-2 ring-emerald-500/30'
-                                      : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
-                                    : isSelected
-                                      ? 'bg-rose-500/25 text-rose-300 border-rose-400/80 ring-2 ring-rose-500/30'
-                                      : 'bg-rose-500/10 text-rose-400 border-rose-500/20 hover:bg-rose-500/20'
-                                }`}
+                                onClick={() => setCurrentIndex(selectedReviewIndex)}
+                                className="w-full flex flex-col p-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 transition-all text-left cursor-pointer group gap-2 min-h-[92px]"
                               >
-                                {idx + 1}
-                                {isSelected && (
-                                  <span className={`absolute -bottom-1 w-1 h-1 rounded-full ${isCorrect ? 'bg-emerald-400' : 'bg-rose-400'}`} />
-                                )}
-                              </button>
-                            );
-                          })}
-                        </div>
-
-                        {/* Details container */}
-                        {(() => {
-                          const selectedQuiz = QUIZZES[selectedReviewIndex];
-                          const selectedId = userAnswers[selectedQuiz.id];
-                          const option = selectedQuiz.options.find(opt => opt.id === selectedId);
-                          const isCorrect = option?.isCorrect ?? false;
-
-                          return (
-                            <button
-                              onClick={() => setCurrentIndex(selectedReviewIndex)}
-                              className="w-full flex flex-col p-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 transition-all text-left cursor-pointer group gap-2 min-h-[92px]"
-                            >
-                              <div className="flex items-start justify-between gap-2.5 w-full min-w-0">
-                                <span className="text-xs font-semibold text-white group-hover:text-emerald-300 transition-colors leading-snug line-clamp-2">
-                                  {selectedQuiz.question}
-                                </span>
-                                {isCorrect ? (
-                                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                                ) : (
-                                  <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                                )}
-                              </div>
-
-                              <div className="text-[11px] text-zinc-400 leading-normal flex flex-col gap-1 w-full">
-                                <div className="truncate">
-                                  <span className="text-zinc-500 font-medium">Your answer: </span>
-                                  <span className={isCorrect ? "text-emerald-400" : "text-rose-400"}>
-                                    {option ? option.text : "No answer"}
+                                <div className="flex items-start justify-between gap-2.5 w-full min-w-0">
+                                  <span className="text-xs font-semibold text-white group-hover:text-emerald-300 transition-colors leading-snug line-clamp-2">
+                                    {selectedQuiz.question}
                                   </span>
+                                  {isCorrect ? (
+                                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                                  ) : (
+                                    <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                                  )}
                                 </div>
-                                {!isCorrect && (
+
+                                <div className="text-[11px] text-zinc-400 leading-normal flex flex-col gap-1 w-full">
                                   <div className="truncate">
-                                    <span className="text-zinc-500 font-medium">Correct: </span>
-                                    <span className="text-emerald-400 font-medium">
-                                      {selectedQuiz.options.find(opt => opt.isCorrect)?.text}
+                                    <span className="text-zinc-500 font-medium">Your answer: </span>
+                                    <span className={isCorrect ? "text-emerald-400" : "text-rose-400"}>
+                                      {option ? option.text : "No answer"}
                                     </span>
                                   </div>
-                                )}
-                              </div>
-                            </button>
-                          );
-                        })()}
+                                  {!isCorrect && (
+                                    <div className="truncate">
+                                      <span className="text-zinc-500 font-medium">Correct: </span>
+                                      <span className="text-emerald-400 font-medium">
+                                        {selectedQuiz.options.find(opt => opt.isCorrect)?.text}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </button>
+                            );
+                          })()}
+                        </div>
                       </div>
 
-                      {/* Bottom Retake Button */}
-                      <div className="w-full shrink-0 pt-2 flex flex-col items-center gap-3 mt-2 max-w-sm">
+                      {/* Bottom Section (Retake Quiz Button) */}
+                      <div className="w-full shrink-0 pt-2 flex flex-col items-center max-w-sm mt-auto mb-2">
                         <button
                           onClick={() => {
                             setUserAnswers({});
