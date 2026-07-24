@@ -4,8 +4,6 @@ import { useState, useEffect, type PointerEvent } from "react";
 import { createPortal } from "react-dom";
 import type { SlideItem } from "~/entities/slide/model/types";
 import {
-  ChevronRight,
-  ChevronLeft,
   Brain,
   X,
   ArrowUpRight,
@@ -170,16 +168,6 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
     }
   };
 
-  const handlePrev = () => {
-    setAutoAdvanceActive(false);
-    setTimeLeft(5000);
-    setIsPaused(false);
-    if (currentIndex === 0) {
-      setCurrentIndex(QUIZZES.length - 1);
-    } else {
-      setCurrentIndex((prev) => prev - 1);
-    }
-  };
 
   const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest("button")) {
@@ -569,15 +557,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                           </div>
                         )}
                         
-                        <div className="flex items-center justify-between w-full">
-                          <button
-                            onClick={handlePrev}
-                            className="p-2 rounded-full text-zinc-400 bg-white/5 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                            aria-label="Previous question"
-                          >
-                            <ChevronLeft className="w-5 h-5" />
-                          </button>
-                          
+                        <div className="flex items-center justify-center w-full py-2">
                           <div className="flex gap-1.5">
                             {QUIZZES.map((_, idx) => (
                               <div 
@@ -590,14 +570,6 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                               />
                             ))}
                           </div>
-                          
-                          <button
-                            onClick={handleNext}
-                            className="p-2 rounded-full text-zinc-400 bg-white/5 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                            aria-label="Next question"
-                          >
-                            <ChevronRight className="w-5 h-5" />
-                          </button>
                         </div>
                       </div>
                     </>
