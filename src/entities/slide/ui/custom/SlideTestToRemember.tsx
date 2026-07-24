@@ -126,7 +126,6 @@ const THEMES: Record<"indigo" | "amber" | "emerald" | "rose", {
 export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState<1 | -1>(1);
   const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
   const [hasCompleted, setHasCompleted] = useState(false);
 
@@ -166,7 +165,6 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
     setAutoAdvanceActive(false);
     setTimeLeft(5000);
     setIsPaused(false);
-    setDirection(1);
     if (currentIndex === QUIZZES.length - 1) {
       setCurrentIndex(QUIZZES.length);
       setHasCompleted(true);
@@ -179,7 +177,6 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
     setAutoAdvanceActive(false);
     setTimeLeft(5000);
     setIsPaused(false);
-    setDirection(-1);
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
     }
@@ -424,10 +421,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                             return (
                               <button
                                 key={quiz.id}
-                                onClick={() => {
-                                  setDirection(idx > currentIndex ? 1 : -1);
-                                  setCurrentIndex(idx);
-                                }}
+                                onClick={() => setCurrentIndex(idx)}
                                 className="w-full flex items-center justify-between p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-colors text-left cursor-pointer group"
                               >
                                 <div className="flex items-center gap-2.5 min-w-0">
@@ -454,7 +448,6 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                         <button
                           onClick={() => {
                             setUserAnswers({});
-                            setDirection(-1);
                             setCurrentIndex(0);
                             setHasCompleted(false);
                           }}
@@ -497,69 +490,62 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                         </div>
                       </div>
 
-                      {/* Animated Content Wrapper (Question, Options, Explanation) */}
-                      <div
-                        key={currentIndex}
-                        data-direction={direction}
-                        className="flex-1 min-h-0 w-full flex flex-col justify-center data-[direction='1']:animate-slide-in-right data-[direction='-1']:animate-slide-in-left"
-                      >
-                        {/* Central Space: Question & Options */}
-                        <div className="flex flex-col gap-3.5 w-full flex-1 justify-center my-auto">
-                          <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug text-center mb-6 px-1">
-                            {activeQuiz!.question}
-                          </h3>
+                      {/* Central Space: Question & Options */}
+                      <div className="flex flex-col gap-3.5 w-full flex-1 justify-center my-auto">
+                        <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug text-center mb-6 px-1">
+                          {activeQuiz!.question}
+                        </h3>
 
-                          <div className="flex flex-col gap-3.5 w-full">
-                            {activeQuiz!.options.map((option, index) => {
-                              const isSelected = selectedOptionId === option.id;
-                              const letter = ["A", "B", "C", "D"][index];
-                              let btnStyle = `bg-white/5 border-white/10 text-white ${themeConfig.btnHoverBorder}`;
-                              let badgeStyle = "bg-white/10 text-white/85";
+                        <div className="flex flex-col gap-3.5 w-full">
+                          {activeQuiz!.options.map((option, index) => {
+                            const isSelected = selectedOptionId === option.id;
+                            const letter = ["A", "B", "C", "D"][index];
+                            let btnStyle = `bg-white/5 border-white/10 text-white ${themeConfig.btnHoverBorder}`;
+                            let badgeStyle = "bg-white/10 text-white/85";
 
-                              if (isAnswered) {
-                                if (option.isCorrect) {
-                                  btnStyle = "bg-emerald-500/20 border-emerald-400/60 text-emerald-100 font-semibold";
-                                  badgeStyle = "bg-emerald-500/30 text-emerald-300";
-                                } else if (isSelected) {
-                                  btnStyle = "bg-rose-500/20 border-rose-400/60 text-rose-100 font-semibold animate-shake";
-                                  badgeStyle = "bg-rose-500/30 text-rose-300";
-                                } else {
-                                  btnStyle = "bg-white/5 border-white/5 text-white/50";
-                                  badgeStyle = "bg-white/5 text-white/30";
-                                }
+                            if (isAnswered) {
+                              if (option.isCorrect) {
+                                btnStyle = "bg-emerald-500/20 border-emerald-400/60 text-emerald-100 font-semibold";
+                                badgeStyle = "bg-emerald-500/30 text-emerald-300";
+                              } else if (isSelected) {
+                                btnStyle = "bg-rose-500/20 border-rose-400/60 text-rose-100 font-semibold animate-shake";
+                                badgeStyle = "bg-rose-500/30 text-rose-300";
+                              } else {
+                                btnStyle = "bg-white/5 border-white/5 text-white/50";
+                                badgeStyle = "bg-white/5 text-white/30";
                               }
+                            }
 
-                              return (
-                                <button
-                                  key={option.id}
-                                  onClick={() => handleSelect(option.id)}
-                                  disabled={isAnswered}
-                                  className={`w-full py-2.5 px-3 rounded-xl border transition-all active:scale-[0.99] cursor-pointer flex items-center gap-3 ${btnStyle}`}
-                                >
-                                  <span className={`w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0 transition-colors ${badgeStyle}`}>
-                                    {letter}
-                                  </span>
-                                  <span className="flex-1 text-left text-sm leading-snug">{option.text}</span>
-                                </button>
-                              );
-                            })}
-                          </div>
+                            return (
+                              <button
+                                key={option.id}
+                                onClick={() => handleSelect(option.id)}
+                                disabled={isAnswered}
+                                className={`w-full py-2.5 px-3 rounded-xl border transition-all active:scale-[0.99] cursor-pointer flex items-center gap-3 ${btnStyle}`}
+                              >
+                                <span className={`w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0 transition-colors ${badgeStyle}`}>
+                                  {letter}
+                                </span>
+                                <span className="flex-1 text-left text-sm leading-snug">{option.text}</span>
+                              </button>
+                            );
+                          })}
                         </div>
+                      </div>
 
-                        {/* Micro-Explanation Box */}
-                        <div className="w-full flex items-center justify-center pt-2">
-                          <div 
-                            className={`w-full transition-all duration-500 transform ${
-                              isAnswered 
-                                ? "opacity-100 visible translate-y-0" 
-                                : "opacity-0 invisible -translate-y-1 pointer-events-none"
-                            }`}
-                          >
-                            <div className="px-3 py-2 bg-emerald-500/10 rounded-xl w-full text-center border border-emerald-500/20">
-                              <p className="text-xs text-emerald-300 font-medium leading-normal">
-                                {activeQuiz!.explanation}
-                              </p>
-                            </div>
+                      {/* Micro-Explanation Box */}
+                      <div className="w-full flex items-center justify-center pt-2">
+                        <div 
+                          className={`w-full transition-all duration-500 transform ${
+                            isAnswered 
+                              ? "opacity-100 visible translate-y-0" 
+                              : "opacity-0 invisible -translate-y-1 pointer-events-none"
+                          }`}
+                        >
+                          <div className="px-3 py-2 bg-emerald-500/10 rounded-xl w-full text-center border border-emerald-500/20">
+                            <p className="text-xs text-emerald-300 font-medium leading-normal">
+                              {activeQuiz!.explanation}
+                            </p>
                           </div>
                         </div>
                       </div>
