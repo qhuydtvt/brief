@@ -537,8 +537,14 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                         </div>
 
                         {/* Progress Bar (countdown) - placed inline above the pagination controls */}
-                        {autoAdvanceActive && isAnswered && !isResultsScreen && (
-                          <div className="w-full h-[3px] bg-white/10 rounded-full overflow-hidden shrink-0">
+                        {!isResultsScreen && (
+                          <div 
+                            className={`w-full h-[3px] rounded-full overflow-hidden shrink-0 transition-all duration-500 ${
+                              (autoAdvanceActive && isAnswered)
+                                ? "bg-white/10 opacity-100"
+                                : "bg-transparent opacity-0 pointer-events-none"
+                            }`}
+                          >
                             <div 
                               className="h-full transition-all duration-100 ease-linear"
                               style={{
