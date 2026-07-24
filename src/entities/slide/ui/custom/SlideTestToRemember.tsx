@@ -521,17 +521,20 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
                       {/* Micro-Explanation & Bottom Navigation */}
                       <div className="w-full shrink-0 pt-2 flex flex-col items-center gap-3 mt-2">
-                        <div className="min-h-[36px] w-full flex items-center justify-center">
-                          {isAnswered && (
-                            <div className="w-full space-y-3 animate-fadeIn">
-                              <div className="px-3 py-2 bg-emerald-500/10 rounded-xl w-full text-center border border-emerald-500/20">
-                                <p className="text-xs text-emerald-300 font-medium leading-normal">
-                                  {activeQuiz!.explanation}
-                                </p>
-                              </div>
-
+                        <div className="w-full flex items-center justify-center">
+                          <div 
+                            className={`w-full transition-all duration-500 transform ${
+                              isAnswered 
+                                ? "opacity-100 visible translate-y-0" 
+                                : "opacity-0 invisible -translate-y-1 pointer-events-none"
+                            }`}
+                          >
+                            <div className="px-3 py-2 bg-emerald-500/10 rounded-xl w-full text-center border border-emerald-500/20">
+                              <p className="text-xs text-emerald-300 font-medium leading-normal">
+                                {activeQuiz!.explanation}
+                              </p>
                             </div>
-                          )}
+                          </div>
                         </div>
 
                         {/* Progress Bar (countdown) - placed inline above the pagination controls */}
