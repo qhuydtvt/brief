@@ -356,7 +356,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                           : score === 3 
                             ? "Strong Score" 
                             : score === 2 
-                              ? "Passing Score" 
+                              ? "Halfway There" 
                               : score === 1
                                 ? "Room to Grow"
                                 : "Keep Practicing"
