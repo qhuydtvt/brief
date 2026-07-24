@@ -396,14 +396,14 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
                       <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed text-center max-w-xs px-2 mt-1">
                         {score === 4 
-                          ? "Synaptic connection locked! You've forged strong neural pathways for these mobile design principles." 
+                          ? "Synaptic connection locked! These principles are now wired in." 
                           : score === 3 
-                            ? "Solid neural encoding! You have a great grasp of the core concepts, and a quick repetition tomorrow will cement them." 
+                            ? "Solid neural encoding! Repeat tomorrow to lock these concepts in." 
                             : score === 2 
-                              ? "Memory consolidation in progress. Your brain is sorting this info, so space your next review to strengthen connections."
+                              ? "Consolidation in progress! Space your next review to build connections."
                               : score === 1
-                                ? "Neural pathways active! Correcting mistakes triggers the strongest learning, so give it another quick run to rebuild."
-                                : "Baseline established! Recall errors prime your brain for neuroplasticity, preparing you to absorb it all on the next try."
+                                ? "Neural priming active! Correcting mistakes triggers learning—try again."
+                                : "Baseline established! Recall errors prime your brain, so try again."
                         }
                       </p>
 
