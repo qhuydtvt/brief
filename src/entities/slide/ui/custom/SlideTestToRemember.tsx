@@ -164,17 +164,22 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                   </h3>
 
                   <div className="flex flex-col gap-3.5 w-full">
-                    {activeQuiz.options.map((option) => {
+                    {activeQuiz.options.map((option, index) => {
                       const isSelected = selectedOptionId === option.id;
+                      const letter = ["A", "B", "C", "D"][index];
                       let btnStyle = "bg-white/5 hover:bg-white/15 border-white/10 text-white";
+                      let badgeStyle = "bg-white/10 text-white/85";
 
                       if (isAnswered) {
                         if (option.isCorrect) {
                           btnStyle = "bg-emerald-500/20 border-emerald-400/60 text-emerald-100 font-semibold";
+                          badgeStyle = "bg-emerald-500/30 text-emerald-300";
                         } else if (isSelected) {
                           btnStyle = "bg-rose-500/20 border-rose-400/60 text-rose-100 font-semibold animate-shake";
+                          badgeStyle = "bg-rose-500/30 text-rose-300";
                         } else {
                           btnStyle = "bg-white/5 border-white/5 text-white/50";
+                          badgeStyle = "bg-white/5 text-white/30";
                         }
                       }
 
@@ -183,9 +188,12 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                           key={option.id}
                           onClick={() => handleSelect(option.id)}
                           disabled={isAnswered}
-                          className={`w-full py-3 px-3.5 rounded-xl border text-left text-sm leading-snug transition-all active:scale-[0.99] cursor-pointer ${btnStyle}`}
+                          className={`w-full py-2.5 px-3 rounded-xl border transition-all active:scale-[0.99] cursor-pointer flex items-center gap-3 ${btnStyle}`}
                         >
-                          <span>{option.text}</span>
+                          <span className={`w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0 transition-colors ${badgeStyle}`}>
+                            {letter}
+                          </span>
+                          <span className="flex-1 text-left text-sm leading-snug">{option.text}</span>
                         </button>
                       );
                     })}
