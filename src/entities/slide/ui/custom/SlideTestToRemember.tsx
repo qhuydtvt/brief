@@ -346,7 +346,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                     <div className="flex flex-col items-center justify-between w-full h-full flex-1 pt-3 pb-0 animate-in fade-in zoom-in-95 duration-500">
                       
                       {/* Top Section (Trophy badge, Title, Subtitle celebration) */}
-                      <div className="flex flex-col items-center gap-4 text-center mt-6">
+                      <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center w-full min-h-0 pt-2">
                         {/* Icon Badge */}
                         <div className={`w-18 h-18 rounded-3xl bg-white/5 border ${themeConfig.badgeBorder} flex items-center justify-center relative overflow-hidden shadow-lg`}>
                           {/* Glow backdrop */}
