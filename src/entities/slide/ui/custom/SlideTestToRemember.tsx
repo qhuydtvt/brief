@@ -319,19 +319,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
               {/* Main Quiz Area inside Drawer */}
               <div className="relative flex-1 min-h-0 w-full bg-black rounded-3xl flex flex-col overflow-hidden border border-white/10">
-                {/* Progress Bar (countdown) */}
-                {autoAdvanceActive && isAnswered && !isResultsScreen && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10 z-30">
-                    <div 
-                      className="h-full transition-all duration-100 ease-linear"
-                      style={{
-                        width: `${(timeLeft / 5000) * 100}%`,
-                        backgroundColor: isPaused ? '#71717a' : `rgb(${themeConfig.rgb})`,
-                        boxShadow: isPaused ? 'none' : `0 0 8px rgba(${themeConfig.rgb}, 0.8)`
-                      }}
-                    />
-                  </div>
-                )}
+
 
                 {/* Smooth transition gradient backdrop */}
                 <div 
@@ -562,6 +550,20 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                             </div>
                           )}
                         </div>
+
+                        {/* Progress Bar (countdown) - placed inline above the pagination controls */}
+                        {autoAdvanceActive && isAnswered && !isResultsScreen && (
+                          <div className="w-full h-[3px] bg-white/10 rounded-full overflow-hidden shrink-0">
+                            <div 
+                              className="h-full transition-all duration-100 ease-linear"
+                              style={{
+                                width: `${(timeLeft / 5000) * 100}%`,
+                                backgroundColor: isPaused ? '#71717a' : `rgb(${themeConfig.rgb})`,
+                                boxShadow: isPaused ? 'none' : `0 0 8px rgba(${themeConfig.rgb}, 0.8)`
+                              }}
+                            />
+                          </div>
+                        )}
                         
                         <div className="flex items-center justify-between w-full">
                           <button
