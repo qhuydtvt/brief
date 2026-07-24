@@ -163,7 +163,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                     {activeQuiz.question}
                   </h3>
 
-                  <div className="flex flex-col gap-2.5 w-full">
+                  <div className="flex flex-col gap-3.5 w-full">
                     {activeQuiz.options.map((option) => {
                       const isSelected = selectedOptionId === option.id;
                       let btnStyle = "bg-white/5 hover:bg-white/15 border-white/10 text-white";
