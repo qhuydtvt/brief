@@ -402,7 +402,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                             : score === 2 
                               ? "You got two questions right. Space your next review to build connections."
                               : score === 1
-                                ? "You got only one question right. Correcting mistakes triggers learning—try again."
+                                ? "You got one question right. Correcting mistakes triggers learning—try again."
                                 : "No questions were correct yet. Recall errors prime your brain, so try again."
                         }
                       </p>
