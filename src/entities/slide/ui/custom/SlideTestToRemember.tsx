@@ -489,9 +489,18 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                             setHasCompleted(false);
                             setSelectedReviewIndex(0);
                           }}
-                          className="w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 text-white backdrop-blur-md active:scale-[0.98] shadow-lg group"
+                          className={`w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-500 cursor-pointer flex items-center justify-center gap-2 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md border border-white/10 ${themeConfig.btnHoverBorder} ${themeConfig.headerIcon} active:scale-[0.98] group`}
+                          style={{
+                            boxShadow: '0 0 0 rgba(0,0,0,0)'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.boxShadow = `0 0 20px rgba(${themeConfig.rgb}, 0.35)`;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.boxShadow = '0 0 0 rgba(0,0,0,0)';
+                          }}
                         >
-                          <RefreshCw className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors duration-300" />
+                          <RefreshCw className="w-4 h-4 group-hover:-rotate-90 transition-transform duration-500" />
                           Retake Quiz
                         </button>
                       </div>
