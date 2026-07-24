@@ -379,7 +379,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                             fill="transparent"
                           />
                         </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 text-center">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 text-center translate-y-[5px]">
                           <span className="text-4xl font-black text-white leading-none">{score} / {QUIZZES.length}</span>
                           <span className="text-[11px] font-mono uppercase tracking-widest text-zinc-400 leading-none">Recall</span>
                         </div>
