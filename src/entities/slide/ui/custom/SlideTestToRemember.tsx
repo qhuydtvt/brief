@@ -336,63 +336,62 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                 >
                   
                   {isResultsScreen ? (
-                    /* Results view - Option 2 (Score folded into Review block to save height) */
-                    <div className="flex flex-col items-center justify-center gap-3 py-2 w-full flex-1 my-auto animate-in fade-in zoom-in-95 duration-500">
+                    /* Results view */
+                    <div className="flex flex-col items-center justify-center gap-3.5 py-2 w-full flex-1 my-auto animate-in fade-in zoom-in-95 duration-500">
                       
-                      {/* Unified Review & Score Box */}
-                      <div className="w-full max-w-sm bg-white/[0.03] border border-white/10 rounded-2xl p-4 flex flex-col gap-3 shadow-lg">
-                        
-                        {/* Integrated Score Header */}
-                        <div className="flex flex-col gap-1.5 pb-2.5 border-b border-white/5">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              {score === 4 ? (
-                                <Trophy className="w-5 h-5 text-amber-400" />
-                              ) : score === 3 ? (
-                                <Award className="w-5 h-5 text-emerald-400" />
-                              ) : (
-                                <Brain className={`w-5 h-5 ${themeConfig.headerIcon}`} />
-                              )}
-                              <h3 className="text-sm font-bold text-white tracking-tight">
-                                {score === 4 
-                                  ? "Perfect Score" 
-                                  : score === 3 
-                                    ? "Strong Score" 
-                                    : score === 2 
-                                      ? "Halfway There" 
-                                      : score === 1
-                                        ? "Room to Grow"
-                                        : "Keep Practicing"
-                                }
-                              </h3>
-                            </div>
-                            
-                            {/* Score Pill */}
-                            <span className={`text-[10px] font-mono font-semibold tracking-widest uppercase px-2.5 py-0.5 rounded-full border ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
+                      {/* Icon Badge */}
+                      <div className={`w-14 h-14 rounded-2xl bg-white/5 border ${themeConfig.badgeBorder} flex items-center justify-center relative overflow-hidden`}>
+                        {/* Glow backdrop */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
+                        {score === 4 ? (
+                          <Trophy className="w-7 h-7 text-amber-400 animate-pulse" />
+                        ) : score === 3 ? (
+                          <Award className="w-7 h-7 text-emerald-400 animate-pulse" />
+                        ) : (
+                          <Brain className={`w-7 h-7 ${themeConfig.headerIcon} animate-pulse`} />
+                        )}
+                      </div>
+
+                      {/* Status celebration text */}
+                      <div className="flex flex-col gap-1 items-center text-center">
+                        <h3 className="text-xl font-extrabold text-white tracking-tight">
+                          {score === 4 
+                            ? "Perfect Score" 
+                            : score === 3 
+                              ? "Strong Score" 
+                              : score === 2 
+                                ? "Halfway There" 
+                                : score === 1
+                                  ? "Room to Grow"
+                                  : "Keep Practicing"
+                          }
+                        </h3>
+                        <p className="text-xs text-zinc-400 max-w-xs px-2 leading-relaxed">
+                          {score === 4 
+                            ? "These principles are now wired in." 
+                            : score === 3 
+                              ? "Repeat tomorrow to lock these concepts in." 
+                              : score === 2 
+                                ? "Space your next review to build connections."
+                                : score === 1
+                                  ? "Correcting mistakes triggers learning—try again."
+                                  : "Recall errors prime your brain, so try again."
+                          }
+                        </p>
+                      </div>
+
+                      {/* Review breakdown Box */}
+                      <div className="w-full max-w-sm bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col gap-2.5">
+                        <div className="flex items-center justify-between px-1">
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 text-left">
+                              Review Questions
+                            </h4>
+                            {/* Score Pill folded here! */}
+                            <span className={`text-[9px] font-mono font-semibold tracking-wider uppercase px-2 py-0.25 rounded-full border ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
                               Recall: {score}/{QUIZZES.length}
                             </span>
                           </div>
-                          
-                          {/* Feedback Sentence */}
-                          <p className="text-xs text-zinc-400 leading-relaxed">
-                            {score === 4 
-                              ? "These principles are now wired in." 
-                              : score === 3 
-                                ? "Repeat tomorrow to lock these concepts in." 
-                                : score === 2 
-                                  ? "Space your next review to build connections."
-                                  : score === 1
-                                    ? "Correcting mistakes triggers learning—try again."
-                                    : "Recall errors prime your brain, so try again."
-                            }
-                          </p>
-                        </div>
-
-                        {/* Review Header */}
-                        <div className="flex items-center justify-between px-1 pt-0.5">
-                          <h4 className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 text-left">
-                            Review Questions
-                          </h4>
                           <span className="text-[9px] font-mono text-zinc-500 uppercase">
                             Question {selectedReviewIndex + 1} of {QUIZZES.length}
                           </span>
