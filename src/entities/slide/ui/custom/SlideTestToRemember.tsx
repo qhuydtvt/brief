@@ -354,34 +354,34 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                       </h3>
 
                       {/* Radial score display */}
-                      <div className="relative flex items-center justify-center w-32 h-32 my-3">
-                        <svg className="w-32 h-32 transform -rotate-90">
+                      <div className="relative flex items-center justify-center w-40 h-40 my-4">
+                        <svg className="w-40 h-40 transform -rotate-90">
                           <circle
-                            cx="64"
-                            cy="64"
-                            r="50"
+                            cx="80"
+                            cy="80"
+                            r="68"
                             className="stroke-white/10"
-                            strokeWidth="10"
+                            strokeWidth="12"
                             fill="transparent"
                           />
                           <circle
-                            cx="64"
-                            cy="64"
-                            r="50"
+                            cx="80"
+                            cy="80"
+                            r="68"
                             className="transition-all duration-1000 ease-out"
                             style={{
                               stroke: `rgb(${themeConfig.rgb})`,
-                              strokeDasharray: `${2 * Math.PI * 50}`,
-                              strokeDashoffset: `${2 * Math.PI * 50 * (1 - score / QUIZZES.length)}`
+                              strokeDasharray: `${2 * Math.PI * 68}`,
+                              strokeDashoffset: `${2 * Math.PI * 68 * (1 - score / QUIZZES.length)}`
                             }}
-                            strokeWidth="10"
+                            strokeWidth="12"
                             strokeLinecap="round"
                             fill="transparent"
                           />
                         </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-center">
-                          <span className="text-3xl font-black text-white leading-none">{score} / {QUIZZES.length}</span>
-                          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 leading-none">Score</span>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 text-center">
+                          <span className="text-4xl font-black text-white leading-none">{score} / {QUIZZES.length}</span>
+                          <span className="text-[11px] font-mono uppercase tracking-widest text-zinc-400 leading-none">Score</span>
                         </div>
                       </div>
 
