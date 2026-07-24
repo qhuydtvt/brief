@@ -287,7 +287,11 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
             {/* Drawer container */}
             <div
-              className="relative w-full h-dvh max-w-xl mx-auto bg-black border-x border-white/10 flex flex-col pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] px-2.5 sm:px-4 gap-2 animate-in slide-in-from-bottom duration-300 overflow-hidden"
+              className={`relative w-full h-dvh max-w-xl mx-auto bg-black border-x border-white/10 flex flex-col pt-[max(0.5rem,env(safe-area-inset-top))] ${
+                isResultsScreen
+                  ? "pb-2"
+                  : "pb-[max(0.5rem,env(safe-area-inset-bottom))]"
+              } px-2.5 sm:px-4 gap-2 animate-in slide-in-from-bottom duration-300 overflow-hidden`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header Handle Bar */}
@@ -332,12 +336,14 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                   onPointerUp={handlePointerUp}
                   onPointerLeave={handlePointerLeave}
                   onPointerCancel={handlePointerCancel}
-                  className="relative z-10 flex-1 min-h-0 w-full p-3 sm:p-4 flex flex-col justify-between overflow-y-auto no-scrollbar"
+                  className={`relative z-10 flex-1 min-h-0 w-full p-3 sm:p-4 ${
+                    isResultsScreen ? "pb-1" : ""
+                  } flex flex-col justify-between overflow-y-auto no-scrollbar`}
                 >
                   
                   {isResultsScreen ? (
                     /* Results view */
-                    <div className="flex flex-col items-center justify-between w-full h-full flex-1 py-3 animate-in fade-in zoom-in-95 duration-500">
+                    <div className="flex flex-col items-center justify-between w-full h-full flex-1 pt-3 pb-0 animate-in fade-in zoom-in-95 duration-500">
                       
                       {/* Top Section (Trophy badge, Title, Subtitle celebration) */}
                       <div className="flex flex-col items-center gap-4 text-center mt-6">
@@ -474,7 +480,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                       </div>
 
                       {/* Bottom Section (Retake Quiz Button) */}
-                      <div className="w-full shrink-0 pt-2 flex flex-col items-center max-w-sm mt-auto mb-2">
+                      <div className="w-full shrink-0 pt-2 flex flex-col items-center max-w-sm mt-auto mb-0">
                         <button
                           onClick={() => {
                             setUserAnswers({});
