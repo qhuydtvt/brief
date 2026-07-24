@@ -480,8 +480,18 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                         </div>
                       </div>
 
-                      {/* Bottom Section (Retake Quiz Button) */}
-                      <div className="w-full shrink-0 pt-2 flex flex-col items-center max-w-sm mt-auto mb-0">
+                      {/* Bottom Section (Close & Retake Buttons Stacked) */}
+                      <div className="w-full shrink-0 pt-2 flex flex-col items-center max-w-sm mt-auto mb-0 gap-2">
+                        {/* Close Quiz Button */}
+                        <button
+                          onClick={() => setIsDrawerOpen(false)}
+                          className="w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 bg-white/[0.08] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 text-white backdrop-blur-md active:scale-[0.98] shadow-lg group"
+                        >
+                          <X className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors duration-300" />
+                          Close Quiz
+                        </button>
+
+                        {/* Retake Quiz Button */}
                         <button
                           onClick={() => {
                             setUserAnswers({});
@@ -489,18 +499,9 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                             setHasCompleted(false);
                             setSelectedReviewIndex(0);
                           }}
-                          className={`w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-500 cursor-pointer flex items-center justify-center gap-2 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md border border-white/10 ${themeConfig.btnHoverBorder} ${themeConfig.headerIcon} active:scale-[0.98] group`}
-                          style={{
-                            boxShadow: '0 0 0 rgba(0,0,0,0)'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.boxShadow = `0 0 20px rgba(${themeConfig.rgb}, 0.35)`;
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.boxShadow = '0 0 0 rgba(0,0,0,0)';
-                          }}
+                          className="w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-white/10 text-zinc-400 hover:text-zinc-200 active:scale-[0.98] group"
                         >
-                          <RefreshCw className="w-4 h-4 group-hover:-rotate-90 transition-transform duration-500" />
+                          <RefreshCw className="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors duration-300" />
                           Retake Quiz
                         </button>
                       </div>
