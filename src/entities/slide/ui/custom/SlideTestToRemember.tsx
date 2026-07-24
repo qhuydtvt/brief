@@ -393,10 +393,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                       <div className="w-full max-w-sm flex-1 flex flex-col justify-center my-auto min-h-0 pt-4 pb-2">
                         {/* Review breakdown Box */}
                         <div className="w-full bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col gap-2.5">
-                          <div className="flex items-center gap-2 px-1">
-                            <h4 className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 text-left">
-                              Review Questions
-                            </h4>
+                          <div className="flex items-center px-1">
                             {/* Score Pill folded here */}
                             <span className={`text-[9px] font-mono font-semibold tracking-wider uppercase px-2 py-0.25 rounded-full border ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
                               Recall: {score}/{QUIZZES.length}
