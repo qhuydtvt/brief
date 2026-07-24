@@ -394,7 +394,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                           </div>
 
                           {/* Review questions block */}
-                          <div className="w-full bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col gap-2.5 shadow-lg">
+                          <div className="w-full flex flex-col gap-2.5 px-1">
                             <div className="flex items-center px-1">
                               {/* Score Pill folded here */}
                               <span className={`text-[9px] font-mono font-semibold tracking-wider uppercase px-2 py-0.25 rounded-full border ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
