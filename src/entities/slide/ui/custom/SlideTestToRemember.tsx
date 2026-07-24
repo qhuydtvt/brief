@@ -128,6 +128,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
   const [hasCompleted, setHasCompleted] = useState(false);
+  const [selectedReviewIndex, setSelectedReviewIndex] = useState(0);
 
   const [autoAdvanceActive, setAutoAdvanceActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(5000);
@@ -364,34 +365,34 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                       </h3>
 
                       {/* Radial score display */}
-                      <div className="relative flex items-center justify-center w-40 h-40 my-4">
-                        <svg className="w-40 h-40 transform -rotate-90">
+                      <div className="relative flex items-center justify-center w-32 h-32 my-2">
+                        <svg className="w-32 h-32 transform -rotate-90">
                           <circle
-                            cx="80"
-                            cy="80"
-                            r="68"
+                            cx="64"
+                            cy="64"
+                            r="54"
                             className="stroke-white/10"
-                            strokeWidth="12"
+                            strokeWidth="10"
                             fill="transparent"
                           />
                           <circle
-                            cx="80"
-                            cy="80"
-                            r="68"
+                            cx="64"
+                            cy="64"
+                            r="54"
                             className="transition-all duration-1000 ease-out"
                             style={{
                               stroke: `rgb(${themeConfig.rgb})`,
-                              strokeDasharray: `${2 * Math.PI * 68}`,
-                              strokeDashoffset: `${2 * Math.PI * 68 * (1 - score / QUIZZES.length)}`
+                              strokeDasharray: `${2 * Math.PI * 54}`,
+                              strokeDashoffset: `${2 * Math.PI * 54 * (1 - score / QUIZZES.length)}`
                             }}
-                            strokeWidth="12"
+                            strokeWidth="10"
                             strokeLinecap="round"
                             fill="transparent"
                           />
                         </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 text-center translate-x-[2px] translate-y-[3px]">
-                          <span className="text-4xl font-black text-white leading-none">{score} / {QUIZZES.length}</span>
-                          <span className="text-[11px] font-mono uppercase tracking-widest text-zinc-400 leading-none">Recall</span>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-center translate-x-[1px] translate-y-[2px]">
+                          <span className="text-3xl font-black text-white leading-none">{score} / {QUIZZES.length}</span>
+                          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 leading-none">Recall</span>
                         </div>
                       </div>
 
@@ -409,38 +410,89 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                       </p>
 
                       {/* Review breakdown */}
-                      <div className="w-full max-w-sm mt-4 bg-white/[0.02] border border-white/5 rounded-2xl p-3 space-y-2">
-                        <h4 className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 text-left px-1">
-                          Review Questions
-                        </h4>
-                        <div className="grid grid-cols-1 gap-2">
+                      <div className="w-full max-w-sm mt-3 bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col gap-2.5">
+                        <div className="flex items-center justify-between px-1">
+                          <h4 className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 text-left">
+                            Review Questions
+                          </h4>
+                          <span className="text-[9px] font-mono text-zinc-500 uppercase">
+                            Question {selectedReviewIndex + 1} of {QUIZZES.length}
+                          </span>
+                        </div>
+
+                        {/* Interactive circles row */}
+                        <div className="flex justify-center gap-3 py-1">
                           {QUIZZES.map((quiz, idx) => {
                             const selectedId = userAnswers[quiz.id];
                             const option = quiz.options.find(opt => opt.id === selectedId);
                             const isCorrect = option?.isCorrect ?? false;
+                            const isSelected = idx === selectedReviewIndex;
+
                             return (
                               <button
                                 key={quiz.id}
-                                onClick={() => setCurrentIndex(idx)}
-                                className="w-full flex items-center justify-between p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-colors text-left cursor-pointer group"
+                                onClick={() => setSelectedReviewIndex(idx)}
+                                className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs border transition-all cursor-pointer relative ${
+                                  isCorrect 
+                                    ? isSelected
+                                      ? 'bg-emerald-500/25 text-emerald-300 border-emerald-400/80 ring-2 ring-emerald-500/30'
+                                      : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
+                                    : isSelected
+                                      ? 'bg-rose-500/25 text-rose-300 border-rose-400/80 ring-2 ring-rose-500/30'
+                                      : 'bg-rose-500/10 text-rose-400 border-rose-500/20 hover:bg-rose-500/20'
+                                }`}
                               >
-                                <div className="flex items-center gap-2.5 min-w-0">
-                                  <span className={`w-5 h-5 rounded-md text-[10px] font-bold flex items-center justify-center shrink-0 ${isCorrect ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'}`}>
-                                    {idx + 1}
-                                  </span>
-                                  <span className="text-xs text-zinc-300 group-hover:text-white truncate pr-2">
-                                    {quiz.question}
-                                  </span>
-                                </div>
-                                {isCorrect ? (
-                                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                                ) : (
-                                  <XCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                                {idx + 1}
+                                {isSelected && (
+                                  <span className={`absolute -bottom-1 w-1 h-1 rounded-full ${isCorrect ? 'bg-emerald-400' : 'bg-rose-400'}`} />
                                 )}
                               </button>
                             );
                           })}
                         </div>
+
+                        {/* Details container */}
+                        {(() => {
+                          const selectedQuiz = QUIZZES[selectedReviewIndex];
+                          const selectedId = userAnswers[selectedQuiz.id];
+                          const option = selectedQuiz.options.find(opt => opt.id === selectedId);
+                          const isCorrect = option?.isCorrect ?? false;
+
+                          return (
+                            <button
+                              onClick={() => setCurrentIndex(selectedReviewIndex)}
+                              className="w-full flex flex-col p-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 transition-all text-left cursor-pointer group gap-2 min-h-[92px]"
+                            >
+                              <div className="flex items-start justify-between gap-2.5 w-full min-w-0">
+                                <span className="text-xs font-semibold text-white group-hover:text-emerald-300 transition-colors leading-snug line-clamp-2">
+                                  {selectedQuiz.question}
+                                </span>
+                                {isCorrect ? (
+                                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                                ) : (
+                                  <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                                )}
+                              </div>
+
+                              <div className="text-[11px] text-zinc-400 leading-normal flex flex-col gap-1 w-full">
+                                <div className="truncate">
+                                  <span className="text-zinc-500 font-medium">Your answer: </span>
+                                  <span className={isCorrect ? "text-emerald-400" : "text-rose-400"}>
+                                    {option ? option.text : "No answer"}
+                                  </span>
+                                </div>
+                                {!isCorrect && (
+                                  <div className="truncate">
+                                    <span className="text-zinc-500 font-medium">Correct: </span>
+                                    <span className="text-emerald-400 font-medium">
+                                      {selectedQuiz.options.find(opt => opt.isCorrect)?.text}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </button>
+                          );
+                        })()}
                       </div>
 
                       {/* Bottom Retake Button */}
@@ -450,6 +502,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                             setUserAnswers({});
                             setCurrentIndex(0);
                             setHasCompleted(false);
+                            setSelectedReviewIndex(0);
                           }}
                           className="w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all cursor-pointer flex items-center justify-center gap-2 bg-white text-black hover:bg-white/90 active:scale-[0.98] shadow-lg"
                         >
