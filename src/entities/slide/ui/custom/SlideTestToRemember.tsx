@@ -321,7 +321,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
               <div className="relative flex-1 min-h-0 w-full bg-black rounded-3xl flex flex-col overflow-hidden border border-white/10">
                 {/* Progress Bar (countdown) */}
                 {autoAdvanceActive && isAnswered && !isResultsScreen && (
-                  <div className="absolute top-0 left-0 right-0 h-[3px] bg-white/10 z-30">
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10 z-30">
                     <div 
                       className="h-full transition-all duration-100 ease-linear"
                       style={{
