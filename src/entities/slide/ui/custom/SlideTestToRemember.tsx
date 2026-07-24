@@ -347,7 +347,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                       
                       {/* Vertically centered parent block containing score and review details */}
                       <div className="w-full max-w-sm flex-1 flex flex-col justify-center my-auto min-h-0 py-4">
-                        <div className="w-full bg-white/[0.02] border border-white/5 rounded-3xl p-4 flex flex-col gap-4 shadow-xl">
+                        <div className="w-full bg-white/[0.02] border border-white/5 rounded-3xl p-5 flex flex-col gap-8 shadow-xl">
                           
                           {/* Trophy/Celebration Block */}
                           <div className="flex flex-col items-center gap-3 text-center pt-2">
@@ -392,9 +392,6 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                               </p>
                             </div>
                           </div>
-
-                          {/* Subtle Separator Divider */}
-                          <div className="border-b border-white/5 w-full" />
 
                           {/* Review questions block */}
                           <div className="flex flex-col gap-2.5">
