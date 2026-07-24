@@ -1,4 +1,6 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect, type PointerEvent } from "react";
 import { createPortal } from "react-dom";
 import type { SlideItem } from "~/entities/slide/model/types";
 import {
@@ -126,6 +128,10 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
 
+  const [autoAdvanceActive, setAutoAdvanceActive] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(5000);
+  const [isPaused, setIsPaused] = useState(false);
+
   const isResultsScreen = currentIndex === QUIZZES.length;
 
   const score = QUIZZES.reduce((acc, quiz) => {
@@ -148,10 +154,16 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
         ...prev,
         [activeQuiz.id]: optionId,
       }));
+      setAutoAdvanceActive(true);
+      setTimeLeft(5000);
+      setIsPaused(false);
     }
   };
 
   const handleNext = () => {
+    setAutoAdvanceActive(false);
+    setTimeLeft(5000);
+    setIsPaused(false);
     if (currentIndex === QUIZZES.length - 1) {
       if (isQuizFinished) {
         setCurrentIndex(QUIZZES.length);
@@ -164,12 +176,72 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   };
 
   const handlePrev = () => {
+    setAutoAdvanceActive(false);
+    setTimeLeft(5000);
+    setIsPaused(false);
     if (currentIndex === 0) {
       setCurrentIndex(QUIZZES.length - 1);
     } else {
       setCurrentIndex((prev) => prev - 1);
     }
   };
+
+  const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).closest("button")) {
+      return;
+    }
+    setIsPaused(true);
+  };
+
+  const handlePointerUp = () => {
+    setIsPaused(false);
+  };
+
+  const handlePointerLeave = () => {
+    setIsPaused(false);
+  };
+
+  const handlePointerCancel = () => {
+    setIsPaused(false);
+  };
+
+  useEffect(() => {
+    if (!autoAdvanceActive || isPaused || !isAnswered || isResultsScreen) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 100) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 100;
+      });
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [autoAdvanceActive, isPaused, isAnswered, isResultsScreen]);
+
+  useEffect(() => {
+    if (timeLeft === 0 && autoAdvanceActive && isAnswered && !isResultsScreen) {
+      const timer = setTimeout(() => {
+        handleNext();
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [timeLeft, autoAdvanceActive, isAnswered, isResultsScreen]);
+
+  useEffect(() => {
+    if (!isDrawerOpen) {
+      const timer = setTimeout(() => {
+        setAutoAdvanceActive(false);
+        setTimeLeft(5000);
+        setIsPaused(false);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [isDrawerOpen]);
 
   return (
     <div className="relative h-auto w-full flex flex-col justify-start items-center p-2 text-center gap-3.5 select-none min-h-0">
@@ -247,6 +319,20 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
               {/* Main Quiz Area inside Drawer */}
               <div className="relative flex-1 min-h-0 w-full bg-black rounded-3xl flex flex-col overflow-hidden border border-white/10">
+                {/* Progress Bar (countdown) */}
+                {autoAdvanceActive && isAnswered && !isResultsScreen && (
+                  <div className="absolute top-0 left-0 right-0 h-[3px] bg-white/10 z-30">
+                    <div 
+                      className="h-full transition-all duration-100 ease-linear"
+                      style={{
+                        width: `${(timeLeft / 5000) * 100}%`,
+                        backgroundColor: isPaused ? '#71717a' : `rgb(${themeConfig.rgb})`,
+                        boxShadow: isPaused ? 'none' : `0 0 8px rgba(${themeConfig.rgb}, 0.8)`
+                      }}
+                    />
+                  </div>
+                )}
+
                 {/* Smooth transition gradient backdrop */}
                 <div 
                   className="absolute inset-0 transition-all duration-500 ease-in-out pointer-events-none" 
@@ -256,7 +342,13 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                 />
 
                 {/* Main Content (Scrollable wrapper inside) */}
-                <div className="relative z-10 flex-1 min-h-0 w-full p-3 sm:p-4 flex flex-col justify-between overflow-y-auto no-scrollbar">
+                <div 
+                  onPointerDown={handlePointerDown}
+                  onPointerUp={handlePointerUp}
+                  onPointerLeave={handlePointerLeave}
+                  onPointerCancel={handlePointerCancel}
+                  className="relative z-10 flex-1 min-h-0 w-full p-3 sm:p-4 flex flex-col justify-between overflow-y-auto no-scrollbar"
+                >
                   
                   {isResultsScreen ? (
                     /* Results view */
@@ -372,10 +464,28 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                     /* Question View */
                     <>
                       {/* Top Badge Row */}
-                      <div className="w-full text-left shrink-0 mb-1">
+                      <div className="w-full flex items-center justify-between shrink-0 mb-1">
                         <span className={`text-[10px] font-mono font-medium tracking-wider uppercase px-2 py-0.5 rounded border inline-block transition-all duration-500 ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
                           Question {currentIndex + 1} of {QUIZZES.length}
                         </span>
+                        {autoAdvanceActive && isAnswered && !isResultsScreen && (
+                          <div className="flex items-center gap-1.5 select-none">
+                            {isPaused ? (
+                              <span className="text-[10px] font-mono font-medium tracking-wider uppercase px-2 py-0.5 rounded border inline-flex items-center gap-1.5 bg-zinc-500/10 text-zinc-400 border-zinc-500/20">
+                                <span className="inline-block w-1.5 h-1.5 rounded-full bg-zinc-500 animate-none" />
+                                PAUSED
+                              </span>
+                            ) : (
+                              <span className={`text-[10px] font-mono font-medium tracking-wider uppercase px-2 py-0.5 rounded border inline-flex items-center gap-1.5 transition-all duration-500 ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
+                                <span className="relative flex h-1.5 w-1.5">
+                                  <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${themeConfig.progressDot}`} />
+                                  <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${themeConfig.progressDot}`} />
+                                </span>
+                                NEXT IN {(timeLeft / 1000).toFixed(1)}S
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       {/* Central Space: Question & Options */}
@@ -431,6 +541,15 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                                   {activeQuiz!.explanation}
                                 </p>
                               </div>
+                              {autoAdvanceActive && (
+                                <div className="text-[10px] text-zinc-500 font-medium tracking-wide text-center select-none py-0.5">
+                                  {isPaused ? (
+                                    <span className="text-zinc-400 font-semibold animate-pulse">Release to resume transition</span>
+                                  ) : (
+                                    <span>Touch and hold screen to pause timer</span>
+                                  )}
+                                </div>
+                              )}
                               {currentIndex === QUIZZES.length - 1 && (
                                 <button
                                   onClick={() => setCurrentIndex(QUIZZES.length)}
