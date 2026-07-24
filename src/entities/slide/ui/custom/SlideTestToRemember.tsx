@@ -352,16 +352,22 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                           {/* Trophy/Celebration Block */}
                           <div className="flex flex-col items-center gap-3 text-center pt-2">
                             {/* Icon Badge */}
-                            <div className={`w-16 h-16 rounded-2xl bg-white/5 border ${themeConfig.badgeBorder} flex items-center justify-center relative overflow-hidden shadow-md`}>
-                              {/* Glow backdrop */}
-                              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
-                              {score === 4 ? (
-                                <Trophy className="w-8 h-8 text-amber-400 animate-pulse" />
-                              ) : score === 3 ? (
-                                <Award className="w-8 h-8 text-emerald-400 animate-pulse" />
-                              ) : (
-                                <Brain className={`w-8 h-8 ${themeConfig.headerIcon} animate-pulse`} />
-                              )}
+                            <div className="relative">
+                              <div className={`w-16 h-16 rounded-2xl bg-white/5 border ${themeConfig.badgeBorder} flex items-center justify-center relative overflow-hidden shadow-md`}>
+                                {/* Glow backdrop */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
+                                {score === 4 ? (
+                                  <Trophy className="w-8 h-8 text-amber-400 animate-pulse" />
+                                ) : score === 3 ? (
+                                  <Award className="w-8 h-8 text-emerald-400 animate-pulse" />
+                                ) : (
+                                  <Brain className={`w-8 h-8 ${themeConfig.headerIcon} animate-pulse`} />
+                                )}
+                              </div>
+                              {/* Corner Score Badge */}
+                              <span className={`absolute -top-1.5 -right-1.5 px-1.5 py-0.5 text-[9px] font-mono font-bold tracking-wider rounded-full border shadow-md leading-none ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
+                                {score}/{QUIZZES.length}
+                              </span>
                             </div>
 
                             {/* Status celebration text */}
@@ -395,12 +401,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
                           {/* Review questions block */}
                           <div className="w-full flex flex-col gap-2.5 px-1">
-                            <div className="flex items-center px-1">
-                              {/* Score Pill folded here */}
-                              <span className={`text-[9px] font-mono font-semibold tracking-wider uppercase px-2 py-0.25 rounded-full border ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
-                                Recall: {score}/{QUIZZES.length}
-                              </span>
-                            </div>
+
 
                             {/* Interactive circles row */}
                             <div className="flex justify-center gap-3 py-1">
