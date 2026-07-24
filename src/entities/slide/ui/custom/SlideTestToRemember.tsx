@@ -336,82 +336,60 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                 >
                   
                   {isResultsScreen ? (
-                    /* Results view */
-                    <div className="flex flex-col items-center justify-center gap-4 py-4 w-full flex-1 my-auto animate-in fade-in zoom-in-95 duration-500">
-                      {/* Icon Badge */}
-                      <div className={`w-16 h-16 rounded-2xl bg-white/5 border ${themeConfig.badgeBorder} flex items-center justify-center mb-1 relative overflow-hidden`}>
-                        {/* Glow backdrop */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
-                        {score === 4 ? (
-                          <Trophy className="w-8 h-8 text-amber-400 animate-pulse" />
-                        ) : score === 3 ? (
-                          <Award className="w-8 h-8 text-emerald-400 animate-pulse" />
-                        ) : (
-                          <Brain className={`w-8 h-8 ${themeConfig.headerIcon} animate-pulse`} />
-                        )}
-                      </div>
-
-                      <h3 className="text-2xl font-extrabold text-white tracking-tight text-center">
-                        {score === 4 
-                          ? "Perfect Score" 
-                          : score === 3 
-                            ? "Strong Score" 
-                            : score === 2 
-                              ? "Halfway There" 
-                              : score === 1
-                                ? "Room to Grow"
-                                : "Keep Practicing"
-                        }
-                      </h3>
-
-                      {/* Radial score display */}
-                      <div className="relative flex items-center justify-center w-32 h-32 my-2">
-                        <svg className="w-32 h-32 transform -rotate-90">
-                          <circle
-                            cx="64"
-                            cy="64"
-                            r="54"
-                            className="stroke-white/10"
-                            strokeWidth="10"
-                            fill="transparent"
-                          />
-                          <circle
-                            cx="64"
-                            cy="64"
-                            r="54"
-                            className="transition-all duration-1000 ease-out"
-                            style={{
-                              stroke: `rgb(${themeConfig.rgb})`,
-                              strokeDasharray: `${2 * Math.PI * 54}`,
-                              strokeDashoffset: `${2 * Math.PI * 54 * (1 - score / QUIZZES.length)}`
-                            }}
-                            strokeWidth="10"
-                            strokeLinecap="round"
-                            fill="transparent"
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-center translate-x-[1px] translate-y-[2px]">
-                          <span className="text-3xl font-black text-white leading-none">{score} / {QUIZZES.length}</span>
-                          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 leading-none">Recall</span>
+                    /* Results view - Option 2 (Score folded into Review block to save height) */
+                    <div className="flex flex-col items-center justify-center gap-3 py-2 w-full flex-1 my-auto animate-in fade-in zoom-in-95 duration-500">
+                      
+                      {/* Unified Review & Score Box */}
+                      <div className="w-full max-w-sm bg-white/[0.03] border border-white/10 rounded-2xl p-4 flex flex-col gap-3 shadow-lg">
+                        
+                        {/* Integrated Score Header */}
+                        <div className="flex flex-col gap-1.5 pb-2.5 border-b border-white/5">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              {score === 4 ? (
+                                <Trophy className="w-5 h-5 text-amber-400" />
+                              ) : score === 3 ? (
+                                <Award className="w-5 h-5 text-emerald-400" />
+                              ) : (
+                                <Brain className={`w-5 h-5 ${themeConfig.headerIcon}`} />
+                              )}
+                              <h3 className="text-sm font-bold text-white tracking-tight">
+                                {score === 4 
+                                  ? "Perfect Score" 
+                                  : score === 3 
+                                    ? "Strong Score" 
+                                    : score === 2 
+                                      ? "Halfway There" 
+                                      : score === 1
+                                        ? "Room to Grow"
+                                        : "Keep Practicing"
+                                }
+                              </h3>
+                            </div>
+                            
+                            {/* Score Pill */}
+                            <span className={`text-[10px] font-mono font-semibold tracking-widest uppercase px-2.5 py-0.5 rounded-full border ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
+                              Recall: {score}/{QUIZZES.length}
+                            </span>
+                          </div>
+                          
+                          {/* Feedback Sentence */}
+                          <p className="text-xs text-zinc-400 leading-relaxed">
+                            {score === 4 
+                              ? "These principles are now wired in." 
+                              : score === 3 
+                                ? "Repeat tomorrow to lock these concepts in." 
+                                : score === 2 
+                                  ? "Space your next review to build connections."
+                                  : score === 1
+                                    ? "Correcting mistakes triggers learning—try again."
+                                    : "Recall errors prime your brain, so try again."
+                            }
+                          </p>
                         </div>
-                      </div>
 
-                      <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed text-center max-w-xs px-2 mt-1">
-                        {score === 4 
-                          ? "These principles are now wired in." 
-                          : score === 3 
-                            ? "Repeat tomorrow to lock these concepts in." 
-                            : score === 2 
-                              ? "Space your next review to build connections."
-                              : score === 1
-                                ? "Correcting mistakes triggers learning—try again."
-                                : "Recall errors prime your brain, so try again."
-                        }
-                      </p>
-
-                      {/* Review breakdown */}
-                      <div className="w-full max-w-sm mt-3 bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col gap-2.5">
-                        <div className="flex items-center justify-between px-1">
+                        {/* Review Header */}
+                        <div className="flex items-center justify-between px-1 pt-0.5">
                           <h4 className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 text-left">
                             Review Questions
                           </h4>
@@ -496,7 +474,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                       </div>
 
                       {/* Bottom Retake Button */}
-                      <div className="w-full shrink-0 pt-2 flex flex-col items-center gap-3 mt-4">
+                      <div className="w-full shrink-0 pt-2 flex flex-col items-center gap-3 mt-2 max-w-sm">
                         <button
                           onClick={() => {
                             setUserAnswers({});
