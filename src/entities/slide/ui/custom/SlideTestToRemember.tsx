@@ -342,11 +342,11 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                         {/* Glow backdrop */}
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
                         {score === 4 ? (
-                          <Trophy className="w-8 h-8 text-amber-400 animate-bounce" />
+                          <Trophy className="w-8 h-8 text-amber-400 animate-pulse" />
                         ) : score === 3 ? (
                           <Award className="w-8 h-8 text-emerald-400 animate-pulse" />
                         ) : (
-                          <Brain className={`w-8 h-8 ${themeConfig.headerIcon}`} />
+                          <Brain className={`w-8 h-8 ${themeConfig.headerIcon} animate-pulse`} />
                         )}
                       </div>
 
