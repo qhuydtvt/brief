@@ -452,19 +452,19 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                           Question {currentIndex + 1} of {QUIZZES.length}
                         </span>
                         <div 
-                          className={`flex items-center gap-1.5 select-none transition-all duration-500 ${
+                          className={`flex items-center select-none transition-all duration-500 ${
                             (autoAdvanceActive && isAnswered)
                               ? "opacity-100 visible"
                               : "opacity-0 invisible pointer-events-none"
                           }`}
                         >
                           {isPaused ? (
-                            <span className="text-[10px] font-mono font-medium tracking-wider uppercase px-2 py-0.5 rounded border inline-flex items-center gap-1.5 bg-zinc-500/10 text-zinc-400 border-zinc-500/20">
+                            <span className="text-[10px] font-mono font-medium tracking-wider uppercase px-2 py-0.5 rounded border inline-flex items-center justify-center gap-1.5 bg-zinc-500/10 text-zinc-400 border-zinc-500/20 w-[95px]">
                               <span className="inline-block w-1.5 h-1.5 rounded-full bg-zinc-500 animate-none" />
                               PAUSED
                             </span>
                           ) : (
-                            <span className={`text-[10px] font-mono font-medium tracking-wider uppercase px-2 py-0.5 rounded border inline-flex items-center gap-1.5 transition-all duration-500 ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder}`}>
+                            <span className={`text-[10px] font-mono font-medium tracking-wider uppercase px-2 py-0.5 rounded border inline-flex items-center justify-center gap-1.5 transition-all duration-500 ${themeConfig.badgeText} ${themeConfig.badgeBg} ${themeConfig.badgeBorder} w-[95px]`}>
                               <span className="relative flex h-1.5 w-1.5">
                                 <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${themeConfig.progressDot}`} />
                                 <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${themeConfig.progressDot}`} />
