@@ -529,15 +529,6 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                                   {activeQuiz!.explanation}
                                 </p>
                               </div>
-                              {autoAdvanceActive && (
-                                <div className="text-[10px] text-zinc-500 font-medium tracking-wide text-center select-none py-0.5">
-                                  {isPaused ? (
-                                    <span className="text-zinc-400 font-semibold animate-pulse">Release to resume transition</span>
-                                  ) : (
-                                    <span>Touch and hold screen to pause timer</span>
-                                  )}
-                                </div>
-                              )}
                               {currentIndex === QUIZZES.length - 1 && (
                                 <button
                                   onClick={() => setCurrentIndex(QUIZZES.length)}
