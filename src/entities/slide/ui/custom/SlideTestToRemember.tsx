@@ -143,7 +143,6 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   const activeQuiz = isResultsScreen ? null : QUIZZES[currentIndex];
   const selectedOptionId = activeQuiz ? (userAnswers[activeQuiz.id] || null) : null;
   const isAnswered = selectedOptionId !== null;
-  const isQuizFinished = Object.keys(userAnswers).length === QUIZZES.length;
 
   const resultsTheme = score === 4 ? "amber" : score === 3 ? "emerald" : score === 2 ? "indigo" : "rose";
   const themeConfig = isResultsScreen ? THEMES[resultsTheme] : THEMES[activeQuiz!.theme];
@@ -165,11 +164,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
     setTimeLeft(5000);
     setIsPaused(false);
     if (currentIndex === QUIZZES.length - 1) {
-      if (isQuizFinished) {
-        setCurrentIndex(QUIZZES.length);
-      } else {
-        setCurrentIndex(0);
-      }
+      setCurrentIndex(QUIZZES.length);
     } else {
       setCurrentIndex((prev) => (prev + 1) % (QUIZZES.length + 1));
     }
