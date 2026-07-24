@@ -350,7 +350,16 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                       </div>
 
                       <h3 className="text-2xl font-extrabold text-white tracking-tight text-center">
-                        {score === 4 ? "Perfect Recall!" : score === 3 ? "Great Performance!" : score === 2 ? "Solid Effort!" : "Keep Practicing!"}
+                        {score === 4 
+                          ? "Synaptic Mastery!" 
+                          : score === 3 
+                            ? "High Retention!" 
+                            : score === 2 
+                              ? "Active Consolidation!" 
+                              : score === 1
+                                ? "Neural Activation!"
+                                : "Baseline Established!"
+                        }
                       </h3>
 
                       {/* Radial score display */}
@@ -387,10 +396,14 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
                       <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed text-center max-w-xs px-2 mt-1">
                         {score === 4 
-                          ? "You've successfully built strong neural pathways for these mobile design concepts!" 
+                          ? "Synaptic connection locked! You've forged strong neural pathways for these mobile design principles." 
                           : score === 3 
-                            ? "You have a solid memory of the key factors. Just a little more spacing will lock it in." 
-                            : "Reviewing the slides again and spacing your practice will help you consolidate these concepts."
+                            ? "Solid neural encoding! You have a great grasp of the core concepts. A quick repetition tomorrow will cement them." 
+                            : score === 2 
+                              ? "Memory consolidation in progress. Your brain is sorting this info. Space your next review to strengthen connections."
+                              : score === 1
+                                ? "Neural pathways active! Correcting mistakes triggers the strongest learning. Give it another quick run to rebuild."
+                                : "Baseline established! Recall errors prime your brain for neuroplasticity. You're ready to absorb it all on the next try."
                         }
                       </p>
 
