@@ -222,7 +222,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
                   {/* Central Space: Question & Options */}
                   <div className="flex flex-col gap-3.5 w-full flex-1 justify-center my-auto">
-                    <h3 className="text-xl font-bold text-white tracking-tight leading-snug text-center mb-1.5 px-1">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug text-center mb-6 px-1">
                       {activeQuiz.question}
                     </h3>
 
