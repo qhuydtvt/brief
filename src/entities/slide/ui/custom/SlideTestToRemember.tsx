@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, type PointerEvent } from "react";
+import { useState, useEffect, useRef, type PointerEvent } from "react";
 import { createPortal } from "react-dom";
 import type { SlideItem } from "~/entities/slide/model/types";
 import {
@@ -129,6 +129,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   const [autoAdvanceActive, setAutoAdvanceActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(5000);
   const [isPaused, setIsPaused] = useState(false);
+  const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const isResultsScreen = currentIndex === QUIZZES.length;
 
@@ -168,23 +169,48 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
     }
   };
 
+  const handlePrev = () => {
+    setAutoAdvanceActive(false);
+    setTimeLeft(5000);
+    setIsPaused(false);
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
+  };
 
   const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest("button")) {
       return;
     }
+    pointerStartRef.current = { x: e.clientX, y: e.clientY };
     setIsPaused(true);
   };
 
-  const handlePointerUp = () => {
+  const handlePointerUp = (e: PointerEvent<HTMLDivElement>) => {
+    if (pointerStartRef.current && !isResultsScreen) {
+      const diffX = e.clientX - pointerStartRef.current.x;
+      const diffY = e.clientY - pointerStartRef.current.y;
+      
+      // Horizontal swipe threshold of 60px
+      if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0) {
+          handleNext();
+        } else {
+          handlePrev();
+        }
+      }
+    }
+    pointerStartRef.current = null;
     setIsPaused(false);
   };
 
   const handlePointerLeave = () => {
+    pointerStartRef.current = null;
     setIsPaused(false);
   };
 
   const handlePointerCancel = () => {
+    pointerStartRef.current = null;
     setIsPaused(false);
   };
 
