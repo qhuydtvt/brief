@@ -351,14 +351,14 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
                       <h3 className="text-2xl font-extrabold text-white tracking-tight text-center">
                         {score === 4 
-                          ? "Synaptic Mastery!" 
+                          ? "Perfect Score" 
                           : score === 3 
-                            ? "High Retention!" 
+                            ? "Strong Score" 
                             : score === 2 
-                              ? "Active Consolidation!" 
+                              ? "Passing Score" 
                               : score === 1
-                                ? "Neural Activation!"
-                                : "Baseline Established!"
+                                ? "Room to Grow"
+                                : "Keep Practicing"
                         }
                       </h3>
 
@@ -396,14 +396,14 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
 
                       <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed text-center max-w-xs px-2 mt-1">
                         {score === 4 
-                          ? "Synaptic connection locked! These principles are now wired in." 
+                          ? "You got all four questions right. These principles are now wired in." 
                           : score === 3 
-                            ? "Solid neural encoding! Repeat tomorrow to lock these concepts in." 
+                            ? "You got three questions right. Repeat tomorrow to lock these concepts in." 
                             : score === 2 
-                              ? "Consolidation in progress! Space your next review to build connections."
+                              ? "You got two questions right. Space your next review to build connections."
                               : score === 1
-                                ? "Neural priming active! Correcting mistakes triggers learning—try again."
-                                : "Baseline established! Recall errors prime your brain, so try again."
+                                ? "You got only one question right. Correcting mistakes triggers learning—try again."
+                                : "No questions were correct yet. Recall errors prime your brain, so try again."
                         }
                       </p>
 
