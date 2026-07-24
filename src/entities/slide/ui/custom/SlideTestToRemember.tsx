@@ -126,6 +126,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
+  const [hasCompleted, setHasCompleted] = useState(false);
 
   const [autoAdvanceActive, setAutoAdvanceActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(5000);
@@ -166,8 +167,9 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
     setDirection(1);
     if (currentIndex === QUIZZES.length - 1) {
       setCurrentIndex(QUIZZES.length);
-    } else {
-      setCurrentIndex((prev) => (prev + 1) % (QUIZZES.length + 1));
+      setHasCompleted(true);
+    } else if (currentIndex < QUIZZES.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
     }
   };
 
@@ -190,16 +192,22 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   };
 
   const handlePointerUp = (e: PointerEvent<HTMLDivElement>) => {
-    if (pointerStartRef.current && !isResultsScreen) {
+    if (pointerStartRef.current) {
       const diffX = e.clientX - pointerStartRef.current.x;
       const diffY = e.clientY - pointerStartRef.current.y;
       
       // Horizontal swipe threshold of 60px
       if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
         if (diffX < 0) {
-          handleNext();
+          // Swipe left (Next)
+          if (hasCompleted || isAnswered) {
+            handleNext();
+          }
         } else {
-          handlePrev();
+          // Swipe right (Prev)
+          if (hasCompleted) {
+            handlePrev();
+          }
         }
       }
     }
@@ -218,7 +226,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
   };
 
   useEffect(() => {
-    if (!autoAdvanceActive || isPaused || !isAnswered || isResultsScreen) {
+    if (!autoAdvanceActive || isPaused || !isAnswered || isResultsScreen || hasCompleted) {
       return;
     }
 
@@ -233,16 +241,16 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
     }, 100);
 
     return () => clearInterval(interval);
-  }, [autoAdvanceActive, isPaused, isAnswered, isResultsScreen]);
+  }, [autoAdvanceActive, isPaused, isAnswered, isResultsScreen, hasCompleted]);
 
   useEffect(() => {
-    if (timeLeft === 0 && autoAdvanceActive && isAnswered && !isResultsScreen) {
+    if (timeLeft === 0 && autoAdvanceActive && isAnswered && !isResultsScreen && !hasCompleted) {
       const timer = setTimeout(() => {
         handleNext();
       }, 0);
       return () => clearTimeout(timer);
     }
-  }, [timeLeft, autoAdvanceActive, isAnswered, isResultsScreen]);
+  }, [timeLeft, autoAdvanceActive, isAnswered, isResultsScreen, hasCompleted]);
 
   useEffect(() => {
     if (!isDrawerOpen) {
@@ -469,6 +477,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                             setUserAnswers({});
                             setDirection(-1);
                             setCurrentIndex(0);
+                            setHasCompleted(false);
                           }}
                           className="w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all cursor-pointer flex items-center justify-center gap-2 bg-white text-black hover:bg-white/90 active:scale-[0.98] shadow-lg"
                         >
@@ -582,7 +591,7 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
                         {!isResultsScreen && (
                           <div 
                             className={`w-full h-[3px] rounded-full overflow-hidden shrink-0 transition-all duration-500 ${
-                              (autoAdvanceActive && isAnswered)
+                              (autoAdvanceActive && isAnswered && !hasCompleted)
                                 ? "bg-white/10 opacity-100"
                                 : "bg-transparent opacity-0 pointer-events-none"
                             }`}
