@@ -250,27 +250,30 @@ export function SlideTestToRemember({ slide: _slide }: { slide: SlideItem }) {
         </p>
       </div>
 
-      {/* Standardized Minimalist CTA Card */}
+      {/* Premium Glassmorphic CTA Card */}
       <div className="w-full">
         <button
           type="button"
           onClick={() => setIsDrawerOpen(true)}
-          className="group relative w-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 active:scale-[0.98] text-white p-3.5 rounded-2xl transition-all duration-300 flex items-center gap-3 cursor-pointer outline-none text-left overflow-hidden shadow-lg backdrop-blur-md"
+          className="group relative w-full bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/5 hover:from-indigo-500/20 hover:via-purple-500/20 hover:to-pink-500/10 border border-indigo-500/30 hover:border-purple-400/60 active:scale-[0.98] text-white p-3.5 rounded-2xl transition-all duration-300 flex items-center gap-3 cursor-pointer outline-none text-left overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(99,102,241,0.25)] backdrop-blur-md"
         >
-          {/* Icon Badge */}
-          <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/10 text-white flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-colors duration-200">
-            <Brain className="w-4.5 h-4.5 text-white/90 group-hover:scale-110 transition-transform duration-200" />
+          {/* Internal background glow transition */}
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/10 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+          {/* High-Contrast Theme Glow Icon Badge */}
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-600/20 border border-indigo-500/40 text-indigo-300 flex items-center justify-center shrink-0 group-hover:from-indigo-500/30 group-hover:to-purple-600/30 group-hover:text-indigo-200 group-hover:border-purple-400/50 shadow-[0_0_12px_rgba(99,102,241,0.15)] group-hover:shadow-[0_0_16px_rgba(168,85,247,0.4)] transition-all duration-300">
+            <Brain className="w-4.5 h-4.5 group-hover:scale-110 transition-transform duration-300" />
           </div>
 
-          {/* Typography */}
-          <div className="flex-1 min-w-0">
+          {/* High-Contrast Premium Typography */}
+          <div className="flex-1 min-w-0 z-10">
             <div className="flex items-center gap-1.5">
-              <h4 className="text-xs font-semibold text-white tracking-tight leading-snug">
+              <h4 className="text-xs font-bold text-white tracking-tight leading-snug group-hover:text-indigo-100 transition-colors duration-200">
                 Test Your Recall
               </h4>
-              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-white transition-colors duration-200" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-indigo-400 group-hover:text-indigo-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
             </div>
-            <p className="text-[10px] text-zinc-400 leading-tight mt-0.5 font-normal">
+            <p className="text-[10px] text-zinc-300 group-hover:text-zinc-200 leading-tight mt-0.5 font-medium transition-colors duration-200">
               Interactive micro-quizzes testing active recall
             </p>
           </div>
