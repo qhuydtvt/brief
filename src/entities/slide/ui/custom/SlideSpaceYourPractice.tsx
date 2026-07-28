@@ -269,7 +269,7 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
                 }}
                 className={`w-full py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
                   dueCards.length > 0
-                    ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/20 active:scale-95 animate-pulse cursor-pointer"
+                    ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/20 active:scale-95 cursor-pointer"
                     : "bg-white/5 text-zinc-500 cursor-not-allowed opacity-60 border border-white/5"
                 }`}
               >
