@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { SlideItem } from "../../model/types";
-import { RotateCw, CheckCircle, AlertOctagon, Star, Sparkles, RefreshCw } from "lucide-react";
+import { RotateCw, CheckCircle, AlertOctagon, Star, Sparkles, RefreshCw, Lightbulb } from "lucide-react";
 
 function SlideHeader() {
   return (
@@ -96,16 +96,8 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
         ) : (
           <div className="w-full flex flex-col items-center gap-3.5">
             {/* Cards Counter */}
-            <div className="w-full flex justify-between items-center px-1">
+            <div className="w-full flex justify-center items-center px-1">
               <span className="text-[10px] text-zinc-400 font-medium">Card {currentIndex + 1} of {SAMPLE_CARDS.length}</span>
-              {activeCard.hint && (
-                <button
-                  onClick={() => setShowHint(!showHint)}
-                  className="text-[10px] text-indigo-400 hover:text-indigo-300 font-semibold cursor-pointer"
-                >
-                  {showHint ? "Hide Hint" : "Need Hint?"}
-                </button>
-              )}
             </div>
 
             {/* 3D Perspective Card Wrapper */}
@@ -120,6 +112,31 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
               >
                 {/* Card Front */}
                 <div className="absolute inset-0 bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center [backface-visibility:hidden]">
+                  {activeCard.hint && !isFlipped && (
+                    <div className="absolute top-3 right-3 z-10 flex justify-end max-w-[80%]">
+                      {!showHint ? (
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowHint(true);
+                          }}
+                          className="text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer bg-transparent border-none p-1"
+                        >
+                          <Lightbulb className="w-4 h-4" />
+                        </button>
+                      ) : (
+                        <div 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowHint(false);
+                          }}
+                          className="text-[9px] text-indigo-300/90 font-medium italic text-right bg-white/[0.03] border border-white/10 px-2 py-1 rounded-lg cursor-pointer hover:bg-white/10 hover:text-indigo-200 transition-all select-text animate-in fade-in duration-200"
+                        >
+                          {activeCard.hint}
+                        </div>
+                      )}
+                    </div>
+                  )}
                   <h4 className="text-base font-bold text-white tracking-tight w-full text-center">{activeCard.front}</h4>
                   <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-1 text-[9px] text-zinc-500 font-bold uppercase tracking-wider">
                     <RotateCw className="w-3 h-3" /> Tap to Flip
@@ -138,12 +155,7 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
               </div>
             </div>
 
-            {/* Hint Area */}
-            {showHint && (
-              <div className="w-full text-center py-1.5 px-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl animate-in slide-in-from-top-2 duration-200">
-                <p className="text-[10px] text-indigo-300 font-medium italic">Hint: {activeCard.hint}</p>
-              </div>
-            )}
+
 
             {/* Self-Rating Row */}
             <div 
