@@ -259,20 +259,23 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
               )}
             </div>
             <div className="w-full flex flex-col gap-2 mt-2">
-              {dueCards.length > 0 && (
-                <button
-                  onClick={() => {
-                    setSessionQueue(dueCards.map(c => c.id));
-                    setCurrentIndex(0);
-                    setIsFlipped(false);
-                    setShowHint(false);
-                  }}
-                  className="w-full py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-lg shadow-emerald-500/20 active:scale-95 animate-pulse transition-all flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <Play className="w-3.5 h-3.5 fill-white" />
-                  Review Due Cards ({dueCards.length} due)
-                </button>
-              )}
+              <button
+                disabled={dueCards.length === 0}
+                onClick={() => {
+                  setSessionQueue(dueCards.map(c => c.id));
+                  setCurrentIndex(0);
+                  setIsFlipped(false);
+                  setShowHint(false);
+                }}
+                className={`w-full py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                  dueCards.length > 0
+                    ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/20 active:scale-95 animate-pulse cursor-pointer"
+                    : "bg-white/5 text-zinc-500 cursor-not-allowed opacity-60 border border-white/5"
+                }`}
+              >
+                <Play className={`w-3.5 h-3.5 ${dueCards.length > 0 ? "fill-white" : "fill-zinc-500 text-zinc-500"}`} />
+                Review Due Cards ({dueCards.length} due)
+              </button>
               <button
                 onClick={() => {
                   setSessionQueue(cards.map(c => c.id));
