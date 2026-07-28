@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import type { SlideItem } from "../../model/types";
-import { RotateCw, CheckCircle, AlertOctagon, Star, Lightbulb, FastForward, Play, Info, X } from "lucide-react";
+import { RotateCw, CheckCircle, AlertOctagon, Star, Lightbulb, FastForward, Play, Info, X, Brain } from "lucide-react";
 
 function SlideHeader({ onOpenDrawer }: { onOpenDrawer: () => void }) {
   return (
@@ -245,8 +245,12 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
       <div className="w-full flex flex-col items-center justify-start gap-2 h-auto max-w-xs">
         {isCompleted ? (
           <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col items-center gap-4 animate-in zoom-in-95 duration-300">
-            <div className="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
-              <CheckCircle className="w-7 h-7 animate-pulse" />
+            <div className={`w-14 h-14 rounded-full flex items-center justify-center ${dueCards.length > 0 ? "bg-indigo-500/20 border border-indigo-400/30 text-indigo-300" : "bg-emerald-500/20 border border-emerald-400/30 text-emerald-300"}`}>
+              {dueCards.length > 0 ? (
+                <Brain className="w-7 h-7 animate-pulse" />
+              ) : (
+                <CheckCircle className="w-7 h-7 animate-pulse" />
+              )}
             </div>
             <div className="text-center space-y-1">
               <h4 className="text-lg font-bold text-white">
