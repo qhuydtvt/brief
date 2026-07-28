@@ -249,13 +249,15 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
               <CheckCircle className="w-7 h-7 animate-pulse" />
             </div>
             <div className="text-center space-y-1">
-              <h4 className="text-lg font-bold text-white">All Caught Up!</h4>
-              {dueCards.length > 0 ? (
-                <p className="text-xs text-emerald-400 font-medium">{dueCards.length} {dueCards.length === 1 ? 'card' : 'cards'} ready to review.</p>
-              ) : nextDueDate ? (
-                <p className="text-xs text-zinc-400">Next review {formatTimeUntil(nextDueDate)}.</p>
-              ) : (
-                <p className="text-xs text-zinc-400">You've mastered these cards.</p>
+              <h4 className="text-lg font-bold text-white">
+                {dueCards.length > 0 ? "Time to Review!" : "All Caught Up!"}
+              </h4>
+              {dueCards.length === 0 && (
+                nextDueDate ? (
+                  <p className="text-xs text-zinc-400">Next review {formatTimeUntil(nextDueDate)}.</p>
+                ) : (
+                  <p className="text-xs text-zinc-400">You've mastered these cards.</p>
+                )
               )}
             </div>
             <div className="w-full flex flex-col gap-2 mt-2">
@@ -274,7 +276,7 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
                 }`}
               >
                 <Play className={`w-3.5 h-3.5 ${dueCards.length > 0 ? "fill-white" : "fill-zinc-500 text-zinc-500"}`} />
-                Review Due Cards ({dueCards.length} due)
+                {dueCards.length > 0 ? `Review ${dueCards.length} ${dueCards.length === 1 ? 'Card' : 'Cards'}` : "Review Due Cards (0 due)"}
               </button>
               <button
                 onClick={() => {
