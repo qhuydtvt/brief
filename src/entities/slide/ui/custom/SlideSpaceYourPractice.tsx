@@ -21,23 +21,53 @@ interface Flashcard {
 }
 
 const SAMPLE_CARDS: Flashcard[] = [
-  { 
-    id: "1", 
-    front: "Spaced Repetition", 
-    back: "Reviewing key ideas with increasing intervals to build durable memory pathways.", 
-    hint: "Think intervals" 
+  {
+    id: "1",
+    front: "Less is More",
+    back: "Avoid walls of text by chunking information into single, clear takeaways to respect limited attention spans.",
+    hint: "Chunk ideas instead of displaying blocks of text."
   },
-  { 
-    id: "2", 
-    front: "Active Recall", 
-    back: "Forcing the brain to retrieve information rather than passively re-reading notes.", 
-    hint: "Retrieval practice" 
+  {
+    id: "2",
+    front: "Front-load Keywords",
+    back: "Put high-impact terms at the beginning of lines or lists because mobile readers scan vertically along the left edge.",
+    hint: "Put key words where left-aligned scanning begins."
   },
-  { 
-    id: "3", 
-    front: "Decay Rate", 
-    back: "The speed at which memories fade, which slows down after successful review sessions.", 
-    hint: "Memory half-life" 
+  {
+    id: "3",
+    front: "See and Hear",
+    back: "Combine complementary visuals and spoken words to create dual memory pathways (dual coding) in the brain.",
+    hint: "Connect what is seen with what is heard."
+  },
+  {
+    id: "4",
+    front: "Make it Personal",
+    back: "Connect facts to specific target personas or real-world use cases to make content feel immediately relevant.",
+    hint: "Tailor content to the reader's role or interests."
+  },
+  {
+    id: "5",
+    front: "Test to Remember",
+    back: "Force active recall using interactive micro-quizzes rather than passively re-reading information.",
+    hint: "Retrieve memory actively rather than reviewing notes."
+  },
+  {
+    id: "6",
+    front: "Design for Portrait",
+    back: "Place important content in the center natural eye zone, and interactive CTAs at the bottom for thumb reach.",
+    hint: "Optimize layout for mobile physical reach and gaze."
+  },
+  {
+    id: "7",
+    front: "Read the Sound",
+    back: "Design for muted viewing by syncing visual text overlays and captions with the underlying audio tracks.",
+    hint: "Design for the default state where feeds are muted."
+  },
+  {
+    id: "8",
+    front: "Hook Them Fast",
+    back: "Use sudden, high-contrast visual changes in the first 2-3 seconds to interrupt scroll feeds and capture attention.",
+    hint: "Grab attention immediately before the user scrolls away."
   }
 ];
 
