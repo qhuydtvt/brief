@@ -140,6 +140,15 @@ export function calculateMinuteSRSUpdate(card: Pick<SM2Flashcard, "repetition" |
   return { interval, repetition: rep, easinessFactor: ef };
 }
 
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) {
   const [cards, setCards] = useState<SM2Flashcard[]>([]);
   const [isClient, setIsClient] = useState(false);
@@ -157,7 +166,7 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
     
     const nowTime = Date.now();
     const due = initial.filter(c => new Date(c.dueDate).getTime() <= nowTime).map(c => c.id);
-    setSessionQueue(due);
+    setSessionQueue(shuffleArray(due));
     
     setIsClient(true);
   }, []);
@@ -268,7 +277,7 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
               <button
                 disabled={dueCards.length === 0}
                 onClick={() => {
-                  setSessionQueue(dueCards.map(c => c.id));
+                  setSessionQueue(shuffleArray(dueCards.map(c => c.id)));
                   setCurrentIndex(0);
                   setIsFlipped(false);
                   setShowHint(false);
@@ -284,7 +293,7 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
               </button>
               <button
                 onClick={() => {
-                  setSessionQueue(cards.map(c => c.id));
+                  setSessionQueue(shuffleArray(cards.map(c => c.id)));
                   setCurrentIndex(0);
                 }}
                 className="w-full py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white text-xs font-bold active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
@@ -421,6 +430,8 @@ export function SlideSpaceYourPractice({ slide: _slide }: { slide: SlideItem }) 
                   <h4 className="text-2xl font-bold text-white tracking-tight">About Spaced Repetition</h4>
                   <p className="text-sm text-zinc-300 leading-relaxed">
                     Spaced Repetition Systems (SRS) schedule reviews at optimal intervals. When you struggle to remember, the interval shrinks. When you easily remember, the interval expands. This cements durable memory while saving you time.
+                    <br/><br/>
+                    Additionally, cards are randomized before each review session. Shuffling prevents order-association bias, ensuring you actually remember the content rather than just the sequence of cards, thereby strengthening active recall.
                   </p>
 
                   <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col gap-3 mt-4 w-full">
