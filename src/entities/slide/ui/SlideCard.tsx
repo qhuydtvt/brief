@@ -32,6 +32,7 @@ export function SlideCard({
   saveButtonSlot,
   shareButtonSlot
 }: SlideCardProps) {
+  const isFullBleed = slide.id === 's10';
 
   const renderCustomContent = () => {
     switch (slide.id) {
@@ -59,11 +60,17 @@ export function SlideCard({
 
   return (
     <div className={`h-full w-full shrink-0 snap-start bg-gradient-to-br ${slide.bgColor} relative`}>
+      {isFullBleed && (
+        <div className="absolute inset-0 z-10">
+          {renderCustomContent()}
+        </div>
+      )}
+      
       {/* Outer Card (Yellow border/tint) */}
-      <div className="mx-auto w-full max-w-lg h-full z-10 relative overflow-hidden px-3 pt-8 pb-3">
+      <div className={`mx-auto w-full max-w-lg h-full z-20 relative overflow-hidden px-3 pt-8 pb-3 ${isFullBleed ? 'pointer-events-none' : ''}`}>
         
         {/* Top Info (Red Block) */}
-        <div className="absolute top-6 left-6 right-6 z-20 flex justify-between items-center">
+        <div className="absolute top-6 left-6 right-6 z-30 flex justify-between items-center pointer-events-auto">
           <Badge className="bg-white/10 text-white border-none backdrop-blur-sm text-[10px] px-2 py-0.5">
             {slide.title}
           </Badge>
@@ -72,13 +79,15 @@ export function SlideCard({
           </span>
         </div>
 
-        {/* Center Card (Blue Block) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-xs z-30 flex flex-col items-center justify-center">
-          {renderCustomContent()}
-        </div>
+        {/* Center Card (Blue Block) - Hidden for full bleed */}
+        {!isFullBleed && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-xs z-30 flex flex-col items-center justify-center pointer-events-auto">
+            {renderCustomContent()}
+          </div>
+        )}
 
         {/* Bottom Metadata Overlay (Green Block, Left) */}
-        <div className="absolute bottom-1 left-3 max-w-[65%] z-20 bg-transparent p-2.5 text-white text-left space-y-2">
+        <div className="absolute bottom-1 left-3 max-w-[65%] z-30 bg-transparent p-2.5 text-white text-left space-y-2 pointer-events-auto">
           <div className="flex items-center gap-x-2">
             <div className="h-6 w-6 rounded-full bg-indigo-500 border border-white/30 flex items-center justify-center text-[10px] font-black text-white shadow">
               B
@@ -96,7 +105,7 @@ export function SlideCard({
         </div>
 
         {/* Floating Actions Bar (Pink/Red Block, Right) */}
-        <div className="absolute bottom-3 right-0 z-40 flex flex-col items-center gap-y-4 text-white bg-transparent p-2 shrink-0">
+        <div className="absolute bottom-3 right-0 z-40 flex flex-col items-center gap-y-4 text-white bg-transparent p-2 shrink-0 pointer-events-auto">
           {saveButtonSlot}
           {shareButtonSlot}
         </div>
