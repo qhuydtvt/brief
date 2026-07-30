@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import type { SlideItem } from "~/entities/slide/model/types";
-import { Heart, MessageCircle, RotateCw, ArrowUpRight } from "lucide-react";
+import { Heart, MessageCircle, RotateCw, ArrowUpRight, X } from "lucide-react";
 
 type Mode = "double-tap" | "drawer" | "loop";
 
@@ -265,32 +265,32 @@ export function SlideSwipeAndRepeat({ slide: _slide }: { slide: SlideItem }) {
 
       {/* DRAWER SHEET Drawer Mode */}
       <div
-        className={`absolute inset-x-0 bottom-0 h-[240px] bg-white text-black p-4 rounded-t-2xl shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-auto z-40 ${
+        className={`absolute inset-x-0 bottom-0 h-[320px] bg-zinc-950/95 border-t border-white/10 backdrop-blur-md text-white p-4 rounded-t-2xl shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-auto z-40 ${
           isDrawerOpen && activeMode === "drawer" ? "translate-y-0" : "translate-y-full"
         }`}
         onPointerDown={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-3">
-          <h4 className="font-bold text-sm flex items-center gap-1.5 text-zinc-950">
-            <MessageCircle className="w-4 h-4 text-blue-500" /> Comments (1.2k)
+          <h4 className="font-bold text-sm flex items-center gap-1.5 text-white">
+            <MessageCircle className="w-4 h-4 text-blue-400" /> Comments <span className="text-zinc-400 font-normal">(1.2k)</span>
           </h4>
           <button
             type="button"
             onClick={() => setIsDrawerOpen(false)}
-            className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center text-sm font-bold text-zinc-700 hover:bg-black/20 active:scale-90 transition-all cursor-pointer"
+            className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 active:scale-90 text-zinc-400 hover:text-white transition-all flex items-center justify-center cursor-pointer"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
-        <div className="space-y-2 overflow-y-auto max-h-[160px] pb-4 no-scrollbar">
-          <div className="text-left text-xs bg-gray-50 p-2.5 rounded-lg border border-gray-100">
-            <span className="font-bold text-gray-700">user123:</span> Great feature! Non-blocking overlay!
+        <div className="space-y-2 overflow-y-auto max-h-[240px] pb-4 no-scrollbar">
+          <div className="text-left text-xs bg-white/5 border border-white/5 p-2.5 rounded-xl text-zinc-300">
+            <span className="font-bold text-blue-400 mr-1">user123:</span> Great feature! Non-blocking overlay!
           </div>
-          <div className="text-left text-xs bg-gray-50 p-2.5 rounded-lg border border-gray-100">
-            <span className="font-bold text-gray-700">ux_lead:</span> Keeps feed looping in background.
+          <div className="text-left text-xs bg-white/5 border border-white/5 p-2.5 rounded-xl text-zinc-300">
+            <span className="font-bold text-blue-400 mr-1">ux_lead:</span> Keeps feed looping in background.
           </div>
-          <div className="text-left text-xs bg-gray-50 p-2.5 rounded-lg border border-gray-100">
-            <span className="font-bold text-gray-700">react_dev:</span> Clean separation of layout concerns!
+          <div className="text-left text-xs bg-white/5 border border-white/5 p-2.5 rounded-xl text-zinc-300">
+            <span className="font-bold text-blue-400 mr-1">react_dev:</span> Clean separation of layout concerns!
           </div>
         </div>
       </div>
